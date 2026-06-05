@@ -10,12 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('applicants', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('applicants', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('vacancy_id')->nullable()->constrained()->onDelete('set null');
+        $table->string('full_name');
+        $table->string('phone');
+        $table->string('email');
+        $table->text('message')->nullable();
+        $table->string('cv_path');
+        $table->enum('status', ['new', 'reviewed', 'interviewed', 'hired'])->default('new');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

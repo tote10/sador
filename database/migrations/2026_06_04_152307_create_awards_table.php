@@ -10,12 +10,18 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('awards', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('awards', function (Blueprint $table) {
+        $table->id();
+        $table->string('title');
+        $table->string('year');
+        $table->string('organization')->nullable();
+        $table->text('description')->nullable();
+        $table->string('logo_path')->nullable();
+        $table->boolean('is_published')->default(true);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

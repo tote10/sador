@@ -11,11 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+    Schema::create('services', function (Blueprint $table) {
+        $table->id();
+        $table->string('title');
+        $table->string('slug')->unique();
+        $table->text('short_description');
+        $table->longText('full_description');
+        $table->string('image_path')->nullable();
+        $table->boolean('is_featured')->default(false);
+        $table->boolean('is_published')->default(true);
+        $table->timestamps();
+    });
+    }   
 
     /**
      * Reverse the migrations.

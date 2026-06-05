@@ -10,12 +10,18 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('messages', function (Blueprint $table) {
+        $table->id();
+        $table->string('name');
+        $table->string('phone');
+        $table->string('email');
+        $table->string('service_requested')->nullable();
+        $table->text('message');
+        $table->boolean('is_read')->default(false);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
