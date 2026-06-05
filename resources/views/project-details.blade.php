@@ -1,0 +1,229 @@
+@extends('layouts.main')
+
+@section('title', $project['title'])
+
+@section('content')
+    <!-- Hero -->
+    <section class="relative min-h-[70vh] flex items-end pt-28 pb-16 text-white overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="{{ $project['src'] }}" alt="{{ $project['title'] }}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-7xl relative z-10" data-aos="fade-up">
+            <a href="/projects" class="inline-flex items-center gap-2.5 bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold uppercase tracking-widest mb-8 px-4 py-2.5 rounded-xl backdrop-blur-sm shadow-lg transition-all duration-300 group">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                Back to Portfolio
+            </a>
+
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="bg-gradient-to-r from-sador-orange to-amber-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-lg">
+                    {{ $project['cat_label'] }}
+                </span>
+                <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-sador-orange"></i>
+                    {{ $project['year'] }}
+                </span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight mb-4 max-w-4xl leading-tight">
+                {{ $project['title'] }}
+            </h1>
+            <p class="text-slate-300 text-sm flex items-center gap-2 font-light">
+                <i data-lucide="map-pin" class="w-4 h-4 text-sador-orange shrink-0"></i>
+                {{ $project['loc'] }}
+            </p>
+        </div>
+    </section>
+
+    <!-- Specs Grid -->
+    <section class="relative z-20 -mt-8 pb-4">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-white rounded-3xl shadow-2xl shadow-slate-200/60 border border-slate-100 p-6 md:p-8" data-aos="fade-up">
+                <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
+                    <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Budget</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['budget'] }}</div>
+                </div>
+                <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
+                    <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Duration</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['duration'] }}</div>
+                </div>
+                <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
+                    <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Client</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['client'] }}</div>
+                </div>
+                <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
+                    <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Location</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['loc_label'] }}</div>
+                </div>
+                <div class="text-center md:text-left p-4 col-span-2 md:col-span-1">
+                    <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Status</div>
+                    <div class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        {{ $project['status'] }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Narrative: Description + Challenges & Solutions -->
+    <section class="py-24 bg-slate-50">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div data-aos="fade-right">
+                    <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Project Overview</span>
+                    <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 mb-6">Full Description</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">{{ $project['desc'] }}</p>
+                    <div class="mt-8 flex items-center gap-3 text-xs text-slate-500 font-semibold">
+                        <i data-lucide="gauge" class="w-4 h-4 text-sador-orange"></i>
+                        <span>Scope: {{ $project['scale'] }}</span>
+                    </div>
+                </div>
+
+                <div class="space-y-8" data-aos="fade-left">
+                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg shadow-slate-200/40">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
+                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Challenges</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">{{ $project['challenges'] }}</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg shadow-slate-200/40">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                                <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Solutions</h3>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">{{ $project['solutions'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @if (!empty($project['images']))
+    <!-- Image Gallery with Lightbox -->
+    <section class="py-24 bg-white" x-data="{ lightboxOpen: false, activeImage: 0, images: {{ json_encode($project['images']) }} }">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Visual Documentation</span>
+                <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 mb-4">Project Gallery</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-sador-orange to-amber-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($project['images'] as $index => $image)
+                <button type="button"
+                        @click="activeImage = {{ $index }}; lightboxOpen = true"
+                        class="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sador-orange focus:ring-offset-2"
+                        data-aos="fade-up"
+                        data-aos-delay="{{ $index * 50 }}">
+                    <img src="{{ $image }}" alt="{{ $project['title'] }} — view {{ $index + 1 }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/40 transition-colors flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-slate-900">
+                            <i data-lucide="maximize-2" class="w-5 h-5"></i>
+                        </span>
+                    </div>
+                </button>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Lightbox Overlay -->
+        <div x-show="lightboxOpen"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @keydown.escape.window="lightboxOpen = false"
+             @keydown.arrow-right.window="if (lightboxOpen) activeImage = (activeImage + 1) % images.length"
+             @keydown.arrow-left.window="if (lightboxOpen) activeImage = (activeImage - 1 + images.length) % images.length"
+             class="fixed inset-0 z-[100] bg-slate-950/95 flex items-center justify-center p-4"
+             style="display: none;"
+             x-cloak>
+            <button type="button" @click="lightboxOpen = false" class="absolute top-6 right-6 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10" aria-label="Close gallery">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <button type="button" @click="activeImage = (activeImage - 1 + images.length) % images.length" class="absolute left-4 md:left-8 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10" aria-label="Previous image">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+
+            <template x-for="(img, index) in images" :key="index">
+                <img x-show="activeImage === index"
+                     :src="img"
+                     alt="{{ $project['title'] }}"
+                     class="max-h-[85vh] max-w-full object-contain rounded-2xl shadow-2xl"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100">
+            </template>
+
+            <button type="button" @click="activeImage = (activeImage + 1) % images.length" class="absolute right-4 md:right-8 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10" aria-label="Next image">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 text-xs font-bold uppercase tracking-widest">
+                <span x-text="activeImage + 1"></span> / <span x-text="images.length"></span>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <!-- Client Testimonial -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="max-w-4xl mx-auto relative" data-aos="fade-up">
+                <div class="absolute -inset-1 bg-gradient-to-r from-sador-orange via-amber-400 to-sador-blue rounded-[36px] opacity-20 blur-xl"></div>
+                <blockquote class="relative bg-slate-950 text-white rounded-[32px] p-10 md:p-16 border border-slate-800 shadow-2xl overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-sador-orange/10 rounded-full filter blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-sador-blue/20 rounded-full filter blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-1 text-amber-400 mb-6">
+                            @for ($i = 0; $i < 5; $i++)
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            @endfor
+                        </div>
+                        <p class="text-lg md:text-xl text-slate-200 italic leading-relaxed font-light mb-8">
+                            "{{ $project['testimonial'] }}"
+                        </p>
+                        <footer class="border-t border-slate-800 pt-6">
+                            <cite class="not-italic">
+                                <div class="font-bold text-white text-lg">{{ $project['client_person'] }}</div>
+                                <div class="text-slate-400 text-sm mt-1">{{ $project['client_title'] }}</div>
+                            </cite>
+                        </footer>
+                    </div>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-slate-950 py-20 relative overflow-hidden text-white border-t border-slate-900">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#003087_0%,transparent_50%)] opacity-20"></div>
+        <div class="container mx-auto px-4 max-w-7xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 relative z-10">
+            <div>
+                <h2 class="text-3xl font-display font-extrabold mb-3">Inspired by this build?</h2>
+                <p class="text-slate-400 font-light text-lg">Discuss your next commercial, residential, or civil infrastructure project with Sador.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 shrink-0">
+                <a href="/projects" class="bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 px-8 py-4 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all text-center">
+                    More Projects
+                </a>
+                <a href="/contact" class="bg-gradient-to-r from-sador-orange to-amber-500 hover:opacity-95 text-white px-10 py-4 rounded-2xl font-bold uppercase tracking-widest text-xs shadow-xl shadow-sador-orange/20 transition-all text-center">
+                    Request a Quote
+                </a>
+            </div>
+        </div>
+    </section>
+@endsection
