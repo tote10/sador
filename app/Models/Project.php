@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+
 class Project extends Model
 {
     protected $fillable = [
@@ -22,6 +23,7 @@ class Project extends Model
             'is_published' => 'boolean',
         ];
     }
+
 
     public function images(): HasMany
     {
@@ -53,6 +55,14 @@ class Project extends Model
         $path = $this->coverImage?->image_path
             ?? $this->images->first()?->image_path;
 
-        return $path ? asset('storage/' . $path) : null;
+        if (!$path) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return asset('storage/' . $path);
     }
 }

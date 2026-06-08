@@ -26,6 +26,9 @@ class ProjectImage extends Model
 
     public function getUrlAttribute(): string
     {
+        if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+            return $this->image_path;
+        }
         return asset('storage/' . $this->image_path);
     }
 }

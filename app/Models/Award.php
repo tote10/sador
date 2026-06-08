@@ -23,6 +23,14 @@ class Award extends Model
 
     public function getLogoUrlAttribute(): ?string
     {
-        return $this->logo_path ? asset('storage/' . $this->logo_path) : null;
+        if (!$this->logo_path) {
+            return null;
+        }
+
+        if (str_starts_with($this->logo_path, 'http://') || str_starts_with($this->logo_path, 'https://')) {
+            return $this->logo_path;
+        }
+
+        return asset('storage/' . $this->logo_path);
     }
 }
