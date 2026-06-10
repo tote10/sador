@@ -107,3 +107,249 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* White and Professional Admin Theme Overrides */
+.admin-white-theme {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+}
+
+.admin-white-theme aside,
+.admin-white-theme header,
+.admin-white-theme main {
+  background-color: #f8fafc;
+}
+
+/* Base colors for containers and backgrounds */
+.admin-white-theme .bg-slate-950 {
+  background-color: #f8fafc !important;
+}
+
+.admin-white-theme .bg-slate-900 {
+  background-color: #ffffff !important;
+}
+
+.admin-white-theme .bg-slate-950\/20,
+.admin-white-theme .bg-slate-950\/40 {
+  background-color: #f1f5f9 !important;
+}
+
+.admin-white-theme .bg-slate-800 {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+
+.admin-white-theme .bg-slate-800\/20 {
+  background-color: #f8fafc !important;
+}
+
+/* Borders and Dividers */
+.admin-white-theme .border-slate-800,
+.admin-white-theme .border-slate-700,
+.admin-white-theme .border-slate-750 {
+  border-color: #e2e8f0 !important;
+}
+
+.admin-white-theme .divide-slate-800 > :not([hidden]) ~ :not([hidden]),
+.admin-white-theme .divide-slate-700 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* Text color transformations for headings and table data */
+.admin-white-theme h1,
+.admin-white-theme h2,
+.admin-white-theme h3,
+.admin-white-theme h4,
+.admin-white-theme h5,
+.admin-white-theme h6,
+.admin-white-theme th,
+.admin-white-theme td.font-bold,
+.admin-white-theme td.text-white {
+  color: #0f172a !important;
+}
+
+.admin-white-theme .text-slate-100 {
+  color: #1e293b !important;
+}
+
+.admin-white-theme .text-slate-200 {
+  color: #334155 !important;
+}
+
+.admin-white-theme .text-slate-300 {
+  color: #475569 !important;
+}
+
+.admin-white-theme .text-slate-400 {
+  color: #475569 !important; /* Make slightly darker for better contrast */
+}
+
+.admin-white-theme .text-slate-500 {
+  color: #64748b !important; /* Make slightly darker for better contrast */
+}
+
+.admin-white-theme p {
+  color: #475569 !important;
+}
+
+/* Hovers */
+.admin-white-theme .hover\:bg-slate-800:hover,
+.admin-white-theme .hover\:bg-slate-800\/20:hover,
+.admin-white-theme .hover\:bg-slate-800\/10:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.admin-white-theme .hover\:bg-slate-700:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.admin-white-theme .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+.admin-white-theme tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Inputs, Selects, and Textareas (exclude toggles & file pickers) */
+.admin-white-theme input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+.admin-white-theme select,
+.admin-white-theme textarea,
+.admin-white-theme .bg-slate-950\/60 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+.admin-white-theme input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.admin-white-theme select:focus,
+.admin-white-theme textarea:focus {
+  border-color: #FF6600 !important;
+  box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.2) !important;
+}
+
+/* Checkboxes & radios — must stay clickable with visible accent */
+.admin-white-theme input[type="checkbox"],
+.admin-white-theme input[type="radio"],
+.admin-checkbox {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  min-width: 1.125rem !important;
+  min-height: 1.125rem !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  accent-color: #FF6600 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-white-theme input[type="radio"] {
+  border-radius: 9999px;
+}
+
+.admin-white-theme input[type="file"] {
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: #475569 !important;
+}
+
+/* Sidebar Custom Layout Styling */
+.admin-white-theme aside {
+  background-color: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+
+.admin-white-theme aside .bg-slate-950\/20 {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Navigation Links */
+.admin-white-theme nav a {
+  color: #64748b !important;
+}
+
+.admin-white-theme nav a:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.admin-white-theme nav a.bg-gradient-to-r {
+  background-image: none !important;
+  background-color: #f1f5f9 !important;
+  color: #003087 !important; /* Sador Blue font for active label */
+  border-left: 4px solid #FF6600 !important; /* Sador Orange active line */
+}
+
+.admin-white-theme nav a.bg-gradient-to-r i {
+  color: #FF6600 !important;
+}
+
+/* Header customization */
+.admin-white-theme header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Stats/Dashboard Card Badges */
+.admin-white-theme .bg-sador-blue\/10 {
+  background-color: rgba(0, 48, 135, 0.05) !important;
+}
+
+.admin-white-theme .bg-sador-orange\/10 {
+  background-color: rgba(255, 102, 0, 0.05) !important;
+}
+
+/* Buttons */
+.admin-white-theme a.bg-slate-800,
+.admin-white-theme button.bg-slate-800 {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.admin-white-theme a.bg-slate-800:hover,
+.admin-white-theme button.bg-slate-800:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Dropdowns */
+.admin-white-theme .absolute.bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.admin-white-theme .absolute.bg-slate-900 a {
+  color: #475569 !important;
+}
+
+.admin-white-theme .absolute.bg-slate-900 a:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.admin-white-theme .absolute.bg-slate-900 div.border-b {
+  border-color: #e2e8f0 !important;
+}
+
+/* Custom Scrollbar for Light Theme */
+.admin-white-theme ::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+}
+.admin-white-theme ::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border: 3px solid #f8fafc !important;
+}
+.admin-white-theme ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
