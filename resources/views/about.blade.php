@@ -48,7 +48,7 @@
                 <div class="relative" data-aos="fade-left">
                     <div class="absolute -inset-2 bg-gradient-to-tr from-sador-blue to-sador-orange rounded-3xl opacity-10 blur-xl"></div>
                     <div class="relative bg-slate-100 rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-                        <img src="{{ asset('images/hero-building2.jpg') }}" alt="Construction Work" class="w-full h-full object-cover">
+                        <img src="{{ asset('images/hero-building2.jpg') }}" alt="Construction Work" class="w-full h-full object-cover" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                 @foreach($team as $i => $t)
                 <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
                     <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
-                        <img src="{{ $t['img'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ $t['img'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
                     </div>
                     <div class="p-6">

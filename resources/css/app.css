@@ -248,6 +248,41 @@
   position: relative;
   z-index: 1;
 }
+/* Show a checkmark when checked */
+.admin-checkbox:checked::after {
+    content: "✓";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF6600;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+/* Radio styling similar to checkbox */
+.admin-radio {
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  min-width: 1.125rem !important;
+  min-height: 1.125rem !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  accent-color: #FF6600 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.admin-radio:checked::after {
+  content: "";
+  position: absolute;
+  inset: 25%;
+  background-color: #FF6600;
+  border-radius: 9999px;
+}
 
 .admin-white-theme input[type="radio"] {
   border-radius: 9999px;

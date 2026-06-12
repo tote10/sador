@@ -23,45 +23,55 @@
     <!-- Services Catalog List -->
     <section class="py-24 bg-slate-50 relative">
         <div class="container mx-auto px-4 max-w-7xl space-y-24">
-            
-            @php
-                $services = [
-                    [
-                        'title' => 'Commercial Tower Construction',
-                        'desc' => 'We engineer mixed-use retail plazas, multi-story corporate towers, and high-capacity industrial warehouses. Our operations team commands high-capacity earthworks, heavy grading machinery, pre-fabricated steel assembly, and glass-cladding installations.',
-                        'bullets' => ['Turnkey project management & procurement', 'Advanced seismic & wind code compliance', 'LEED-certified sustainable materials option'],
-                        'img' => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
-                        'icon' => 'building-2',
-                        'badge' => 'Grade-1 Certified'
-                    ],
-                    [
-                        'title' => 'Luxury Residential Estates',
-                        'desc' => 'Transforming vacant land into majestic neighborhood assets. We design and construct high-end custom villa compounds, luxury multi-family apartment towers, and custom houses. Every structural aspect is balanced with contemporary, luxurious aesthetic principles.',
-                        'bullets' => ['Bespoke interior architectural blueprints', 'Energy-efficient dynamic cooling & systems', 'Absolute timeline adherence & fast handover'],
-                        'img' => 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
-                        'icon' => 'home',
-                        'badge' => 'Bespoke Luxury'
-                    ],
-                    [
-                        'title' => 'Heavy Civil & Road Infrastructure',
-                        'desc' => 'Adhering to strict national grading and compaction standards. Sador executes structural concrete bridge overpasses, utility sewer network paving, highway asphalt paving, and regional drainage canals to link communities together safely.',
-                        'bullets' => ['State-of-the-art grading & compaction machinery', 'Rigorous highway compaction load tests', 'Approved federal & municipal contractor status'],
-                        'img' => 'https://images.unsplash.com/photo-1541888086925-920a0b777bd3?q=80&w=1200&auto=format&fit=crop',
-                        'icon' => 'milestone',
-                        'badge' => 'National Priority'
-                    ]
-                ];
-            @endphp
 
-            @foreach($services as $i => $s)
+            @foreach($services as $i => $serv)
+            @php
+                // Map icon
+                $icon = 'building-2';
+                if (str_contains(strtolower($serv->slug), 'residential') || str_contains(strtolower($serv->title), 'residential')) {
+                    $icon = 'home';
+                } elseif (str_contains(strtolower($serv->slug), 'civil') || str_contains(strtolower($serv->slug), 'infrastructure') || str_contains(strtolower($serv->title), 'infrastructure') || str_contains(strtolower($serv->title), 'civil')) {
+                    $icon = 'milestone';
+                }
+
+                // Map badge
+                $badge = 'Grade-1 Certified';
+                if (str_contains(strtolower($serv->slug), 'residential') || str_contains(strtolower($serv->title), 'residential')) {
+                    $badge = 'Bespoke Luxury';
+                } elseif (str_contains(strtolower($serv->slug), 'civil') || str_contains(strtolower($serv->slug), 'infrastructure') || str_contains(strtolower($serv->title), 'infrastructure') || str_contains(strtolower($serv->title), 'civil')) {
+                    $badge = 'National Priority';
+                }
+
+                // Map bullets
+                $bullets = [];
+                if (str_contains(strtolower($serv->slug), 'commercial') || str_contains(strtolower($serv->title), 'commercial')) {
+                    $bullets = [
+                        'Turnkey project management & procurement',
+                        'Advanced seismic & wind code compliance',
+                        'LEED-certified sustainable materials option'
+                    ];
+                } elseif (str_contains(strtolower($serv->slug), 'residential') || str_contains(strtolower($serv->title), 'residential')) {
+                    $bullets = [
+                        'Bespoke interior architectural blueprints',
+                        'Energy-efficient dynamic cooling & systems',
+                        'Absolute timeline adherence & fast handover'
+                    ];
+                } else {
+                    $bullets = [
+                        'State-of-the-art grading & compaction machinery',
+                        'Rigorous highway compaction load tests',
+                        'Approved federal & municipal contractor status'
+                    ];
+                }
+            @endphp
             <!-- Service Catalog Item -->
             <div class="bg-white rounded-[32px] overflow-hidden border border-slate-100/80 shadow-2xl flex flex-col {{ $i % 2 == 0 ? 'lg:flex-row' : 'lg:flex-row-reverse' }} items-stretch min-h-[500px]" data-aos="fade-up">
                 <!-- Image Side -->
                 <div class="lg:w-1/2 relative bg-slate-200 min-h-[300px] lg:min-h-full overflow-hidden">
-                    <img src="{{ $s['img'] }}" alt="{{ $s['title'] }}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                    <img src="{{ $serv->image_url }}" alt="{{ $serv->title }}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" loading="lazy">
                     <div class="absolute inset-0 bg-slate-950/20"></div>
                     <span class="absolute top-6 left-6 bg-sador-blue text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl shadow-lg">
-                        {{ $s['badge'] }}
+                        {{ $badge }}
                     </span>
                 </div>
                 
@@ -69,20 +79,20 @@
                 <div class="lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center space-y-8">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 rounded-2xl bg-sador-orange/5 text-sador-orange flex items-center justify-center">
-                            <i data-lucide="{{ $s['icon'] }}" class="w-6 h-6"></i>
+                            <i data-lucide="{{ $icon }}" class="w-6 h-6"></i>
                         </div>
                         <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 leading-tight">
-                            {{ $s['title'] }}
+                            {{ $serv->title }}
                         </h2>
                     </div>
                     
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        {{ $s['desc'] }}
+                        {{ $serv->full_description }}
                     </p>
                     
                     <!-- Specifications list -->
                     <ul class="space-y-3.5 pt-2 border-t border-slate-100">
-                        @foreach($s['bullets'] as $bullet)
+                        @foreach($bullets as $bullet)
                         <li class="flex items-center gap-3 text-sm text-slate-700 font-semibold">
                             <i data-lucide="check-circle-2" class="w-5 h-5 text-sador-orange shrink-0"></i>
                             <span>{{ $bullet }}</span>

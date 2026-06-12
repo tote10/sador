@@ -49,7 +49,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-200">Office Location</h4>
-                                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">Bole Sub City, Woreda 03,<br>Addis Ababa, Ethiopia</p>
+                                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">ADDISABABA, ALEMNESH plaza building 13TH floor,<br>Room No.1303</p>
                                 </div>
                             </div>
 
@@ -60,8 +60,8 @@
                                 <div>
                                     <h4 class="font-bold text-slate-200">Phone Connection</h4>
                                     <p class="text-slate-400 text-sm mt-1">
-                                        <a href="tel:+251911000000" class="hover:text-sador-orange transition-colors font-semibold">+251 911 00 00 00</a><br>
-                                        <a href="tel:+251116000000" class="hover:text-sador-orange transition-colors font-semibold">+251 11 600 00 00</a>
+                                        <a href="tel:+251911708175" class="hover:text-sador-orange transition-colors font-semibold">+2519 11 70 81 75</a><br>
+                                        <a href="tel:+251976808076" class="hover:text-sador-orange transition-colors font-semibold">+2519 76 80 80 76</a>
                                     </p>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                 <div>
                                     <h4 class="font-bold text-slate-200">Email Dispatch</h4>
                                     <p class="text-slate-400 text-sm mt-1">
-                                        <a href="mailto:info@sadorconstruction.com" class="hover:text-sador-orange transition-colors font-semibold">info@sadorconstruction.com</a>
+                                        <a href="mailto:Sadorgcsador@gmail.com" class="hover:text-sador-orange transition-colors font-semibold">Sadorgcsador@gmail.com</a>
                                     </p>
                                 </div>
                             </div>
@@ -82,7 +82,6 @@
 
                     <!-- Bottom accreditation footer in block -->
                     <div class="relative z-10 pt-12 border-t border-slate-900 flex items-center gap-3 text-slate-500 text-xs font-semibold">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         <span>Estimators Online: 8:00 AM - 5:30 PM</span>
                     </div>
                 </div>
@@ -94,42 +93,65 @@
                         <p class="text-slate-400 text-sm font-light">Prepare your details below and an engineer will reply within 12 hours.</p>
                     </div>
 
-                    <form action="#" method="POST" class="space-y-5">
+                    @if(session('success'))
+                        <div class="p-4 bg-green-50 text-green-700 rounded-2xl border border-green-100 text-xs font-semibold">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('contact.store') }}" method="POST" class="space-y-5" x-data="{ submitting: false }" @submit="submitting = true">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Full Name</label>
-                                <input type="text" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="Abebe Kebede">
+                                <input type="text" name="name" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="Abebe Kebede" value="{{ old('name') }}">
+                                @error('name') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Phone Connection</label>
-                                <input type="text" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="+251 9...">
+                                <input type="text" name="phone" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="+251 9..." value="{{ old('phone') }}">
+                                @error('phone') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                             </div>
                         </div>
                         
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email Address</label>
-                            <input type="email" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="abebe@example.com">
+                            <input type="email" name="email" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none" required placeholder="abebe@example.com" value="{{ old('email') }}">
+                            @error('email') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
                         
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Service Scope Requested</label>
-                            <select class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none font-semibold text-slate-700">
-                                <option>Commercial Tower Construction</option>
-                                <option>Luxury Residential Estates</option>
-                                <option>Heavy Civil & Road Infrastructure</option>
-                                <option>General Inquiries & Subcontracting</option>
+                            <select name="service_requested" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none font-semibold text-slate-700">
+                                <option value="Commercial Towers">Commercial Tower Construction</option>
+                                <option value="Residential Estates">Luxury Residential Estates</option>
+                                <option value="Civil Infrastructure">Heavy Civil & Road Infrastructure</option>
+                                <option value="General Inquiries">General Inquiries & Subcontracting</option>
                             </select>
+                            @error('service_requested') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
                         
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Project Brief Description</label>
-                            <textarea rows="4" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none placeholder-slate-400" required placeholder="Please describe details like site area, number of stories, target budget..."></textarea>
+                            <textarea name="message" rows="4" class="w-full border-slate-200 focus:border-sador-orange focus:ring-sador-orange/20 rounded-xl py-3 px-4 text-sm transition-all focus:outline-none placeholder-slate-400" required placeholder="Please describe details like site area, number of stories, target budget...">{{ old('message') }}</textarea>
+                            @error('message') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                         </div>
                         
-                        <button type="submit" class="w-full bg-gradient-to-r from-sador-orange to-amber-500 hover:opacity-95 text-white font-display font-extrabold text-xs uppercase tracking-widest py-4.5 rounded-xl transition-all duration-300 shadow-lg shadow-sador-orange/20 flex items-center justify-center gap-2 group">
-                            Submit Cost Inquiry Proposal
-                            <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                        <button type="submit" 
+                                :disabled="submitting"
+                                :class="submitting ? 'opacity-80 cursor-not-allowed scale-[0.99]' : 'hover:scale-[1.01] hover:shadow-xl hover:shadow-sador-orange/30 active:scale-[0.98]'"
+                                class="w-full bg-gradient-to-r from-sador-orange to-amber-500 text-white font-display font-extrabold text-xs uppercase tracking-widest py-4 rounded-xl transition-all duration-300 shadow-lg shadow-sador-orange/20 flex items-center justify-center gap-2 group">
+                            <span x-show="!submitting" class="flex items-center justify-center gap-2">
+                                Submit Cost Inquiry Proposal
+                                <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                            </span>
+                            <span x-show="submitting" class="flex items-center justify-center gap-2" style="display: none;">
+                                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Sending cost proposal...
+                            </span>
                         </button>
                     </form>
                 </div>
@@ -142,7 +164,7 @@
     <section class="mb-0 bg-slate-50 pb-20">
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="w-full h-[450px] rounded-[32px] overflow-hidden border border-slate-200 shadow-2xl relative bg-slate-200" data-aos="fade-up">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1d126115.11523450917!2d38.70678235287515!3d9.01079340621434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sAddis%20Ababa!5e0!3m2!1sen!2sen!4v1700000000000!5m2!1sen!2sen" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Alemnesh%20Plaza,%20Bole,%20Addis%20Ababa,%20Ethiopia&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>

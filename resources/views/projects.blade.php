@@ -20,17 +20,17 @@
     </div>
 </div>
 
-    @php
-        $projects = array_values(App\Helpers\ProjectHelper::getAll());
-    @endphp
-
     <!-- Projects Grid Section with Alpine.js Filtering -->
     <section class="py-24 bg-slate-50" 
              x-data="{ 
                  activeCategory: 'all',
                  activeYear: 'all',
                  activeLocation: 'all',
-                 projects: {{ json_encode(array_map(function($p) { return ['cat' => $p['cat'], 'year' => $p['year'], 'loc' => $p['loc_filter']]; }, $projects)) }},
+                 projects: {{ json_encode($projects->map(fn($p) => [
+                     'cat' => $p->category, 
+                     'year' => $p->year, 
+                     'loc' => str_contains(strtolower($p->location), 'addis ababa') ? 'addis-ababa' : (str_contains(strtolower($p->location), 'hawassa') ? 'hawassa' : (str_contains(strtolower($p->location), 'adama') ? 'adama' : \Illuminate\Support\Str::slug($p->location)))
+                 ])) }},
                  hasMatches() {
                      return this.projects.some(p => 
                          (this.activeCategory === 'all' || this.activeCategory === p.cat) &&
@@ -134,8 +134,13 @@
             <!-- Dynamic grid items -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach ($projects as $index => $proj)
-                <a href="/projects/{{ $proj['slug'] }}"
-                     x-show="(activeCategory === 'all' || activeCategory === '{{ $proj['cat'] }}') && (activeYear === 'all' || activeYear === '{{ $proj['year'] }}') && (activeLocation === 'all' || activeLocation === '{{ $proj['loc_filter'] }}')"
+                @php
+                    $locFilter = str_contains(strtolower($proj->location), 'addis ababa') ? 'addis-tababa' : (str_contains(strtolower($proj->location), 'hawassa') ? 'hawassa' : (str_contains(strtolower($proj->location), 'adama') ? 'adama' : \Illuminate\Support\Str::slug($proj->location)));
+                    // Fix naming consistency
+                    if ($locFilter === 'addis-tababa') $locFilter = 'addis-ababa';
+                @endphp
+                <a href="/projects/{{ $proj->slug }}"
+                     x-show="(activeCategory === 'all' || activeCategory === '{{ $proj->category }}') && (activeYear === 'all' || activeYear === '{{ $proj->year }}') && (activeLocation === 'all' || activeLocation === '{{ $locFilter }}')"
                      x-transition:enter="transition ease-out duration-400 transform"
                      x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                      x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -147,10 +152,10 @@
                      data-aos-delay="{{ $index * 50 }}">
                      
                     <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                        <img src="{{ $proj['src'] }}" alt="{{ $proj['title'] }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <img src="{{ $proj->cover_url }}" alt="{{ $proj->title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy">
                         <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/45 transition-colors duration-300"></div>
                         <div class="absolute top-4 left-4 bg-gradient-to-r from-sador-orange to-amber-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-lg shadow-md">
-                            {{ $proj['cat_label'] }}
+                            {{ ucfirst($proj->category) }}
                         </div>
                         <span class="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <span class="w-14 h-14 rounded-full bg-white/90 text-slate-900 flex items-center justify-center shadow-xl opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
@@ -160,23 +165,23 @@
                     </div>
                     
                     <div class="p-8">
-                        <span class="text-sador-orange text-[10px] font-extrabold uppercase tracking-widest block mb-2">{{ $proj['cat_label'] }}</span>
+                        <span class="text-sador-orange text-[10px] font-extrabold uppercase tracking-widest block mb-2">{{ ucfirst($proj->category) }}</span>
                         <h3 class="text-2xl font-display font-extrabold text-slate-900 group-hover:text-sador-blue transition-colors leading-tight mb-6">
-                            {{ $proj['title'] }}
+                            {{ $proj->title }}
                         </h3>
                         
                         <div class="flex flex-col gap-3.5 text-xs text-slate-500 font-semibold border-t border-slate-100 pt-6">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                                <span>{{ $proj['loc'] }}</span>
+                                <span>{{ $proj->location }}</span>
                             </div>
                             <div class="flex items-center gap-3">
                                 <i data-lucide="calendar" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                                <span>Completed: {{ $proj['year'] }}</span>
+                                <span>Completed: {{ $proj->year }}</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <i data-lucide="gauge" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                                <span>Scope: {{ $proj['scale'] }}</span>
+                                <i data-lucide="clock" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                                <span>Duration: {{ $proj->duration }}</span>
                             </div>
                         </div>
                     </div>

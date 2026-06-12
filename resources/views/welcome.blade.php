@@ -147,62 +147,27 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Domain 1 -->
-                <div class="group bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:border-sador-blue/20 transition-all duration-500" data-aos="fade-up" data-aos-delay="100">
+                @foreach ($services as $serv)
+                <div class="group bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:border-sador-blue/20 transition-all duration-500" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" alt="Commercial Construction" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <img src="{{ $serv->image_url }}" alt="{{ $serv->title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+                        @if ($serv->is_featured)
                         <span class="absolute top-4 left-4 bg-sador-blue text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md">
-                            Class 1 Structural
+                            Featured
                         </span>
+                        @endif
                     </div>
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">Commercial Towers</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-8">Engineering mixed-use commercial office towers, industrial warehouses, and large institutional complexes with structural integrity.</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">{{ $serv->title }}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-8">{{ $serv->short_description }}</p>
                         <a href="/services" class="inline-flex items-center gap-2 text-xs font-bold text-sador-blue group-hover:text-sador-orange transition-colors uppercase tracking-widest font-display">
                             Learn More 
                             <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
-
-                <!-- Domain 2 -->
-                <div class="group bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:border-sador-blue/20 transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Residential Construction" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
-                        <span class="absolute top-4 left-4 bg-sador-blue text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md">
-                            Luxury Residential
-                        </span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">Residential Estates</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-8">Developing stunning luxury apartment complexes, modern custom villa compounds, and custom houses matching contemporary tastes.</p>
-                        <a href="/services" class="inline-flex items-center gap-2 text-xs font-bold text-sador-blue group-hover:text-sador-orange transition-colors uppercase tracking-widest font-display">
-                            Learn More 
-                            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Domain 3 -->
-                <div class="group bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:border-sador-blue/20 transition-all duration-500" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                        <img src="https://images.unsplash.com/photo-1541888086925-920a0b777bd3?q=80&w=800&auto=format&fit=crop" alt="Infrastructure Development" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
-                        <span class="absolute top-4 left-4 bg-sador-blue text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md">
-                            Heavy Civil Engineering
-                        </span>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">Civil Infrastructure</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-8">Executing heavy engineering contracts including highway and road asphalt paving, utility drainage, and major land grading works.</p>
-                        <a href="/services" class="inline-flex items-center gap-2 text-xs font-bold text-sador-blue group-hover:text-sador-orange transition-colors uppercase tracking-widest font-display">
-                            Learn More 
-                            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -217,32 +182,28 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                @php
-                    $featuredProjects = array_slice(App\Helpers\ProjectHelper::getAll(), 0, 6);
-                @endphp
-                
-                @foreach ($featuredProjects as $slug => $proj)
+                @foreach ($featuredProjects as $proj)
                 <div class="bg-white rounded-3xl overflow-hidden hover:-translate-y-2.5 transition-all duration-500 group border border-slate-100 hover:shadow-2xl" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                        <img src="{{ $proj['src'] }}" alt="{{ $proj['title'] }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <img src="{{ $proj->cover_url }}" alt="{{ $proj->title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy">
                         <div class="absolute top-4 left-4 bg-gradient-to-r from-sador-orange to-amber-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md">
-                            {{ $proj['cat_label'] }}
+                            {{ ucfirst($proj->category) }}
                         </div>
                         <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                            <span class="text-sador-orange text-xs font-bold uppercase tracking-widest mb-2">{{ $proj['cat_label'] }}</span>
-                            <h4 class="text-white text-2xl font-display font-bold mb-4">{{ $proj['title'] }}</h4>
-                            <p class="text-slate-300 text-xs mb-6 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-sador-orange"></i> {{ $proj['loc'] }}</p>
-                            <a href="/projects/{{ $proj['slug'] }}" class="inline-flex items-center gap-2 bg-sador-orange text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-orange-600 transition-colors w-fit">
+                            <span class="text-sador-orange text-xs font-bold uppercase tracking-widest mb-2">{{ ucfirst($proj->category) }}</span>
+                            <h4 class="text-white text-2xl font-display font-bold mb-4">{{ $proj->title }}</h4>
+                            <p class="text-slate-300 text-xs mb-6 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-sador-orange"></i> {{ $proj->location }}</p>
+                            <a href="/projects/{{ $proj->slug }}" class="inline-flex items-center gap-2 bg-sador-orange text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-orange-600 transition-colors w-fit">
                                 View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
                     </div>
                     <div class="p-6 flex justify-between items-center border-t border-slate-50">
-                        <a href="/projects/{{ $proj['slug'] }}" class="block">
-                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-sador-blue transition-colors">{{ $proj['title'] }}</h3>
-                            <p class="text-slate-400 text-xs mt-1 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300"></i> {{ $proj['loc'] }}</p>
+                        <a href="/projects/{{ $proj->slug }}" class="block">
+                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-sador-blue transition-colors">{{ $proj->title }}</h3>
+                            <p class="text-slate-400 text-xs mt-1 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-300"></i> {{ $proj->location }}</p>
                         </a>
-                        <a href="/projects/{{ $proj['slug'] }}" class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-sador-blue group-hover:text-white transition-colors duration-300">
+                        <a href="/projects/{{ $proj->slug }}" class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-sador-blue group-hover:text-white transition-colors duration-300">
                             <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
                         </a>
                     </div>
@@ -305,45 +266,20 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Award 1 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="100">
+                @foreach ($awards as $awd)
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="award" class="w-7 h-7"></i>
+                        @if ($awd->logo_url)
+                            <img src="{{ $awd->logo_url }}" class="w-8 h-8 object-contain" alt="{{ $awd->title }}">
+                        @else
+                            <i data-lucide="award" class="w-7 h-7"></i>
+                        @endif
                     </div>
-                    <span class="text-slate-400 text-xs font-bold block mb-2">2024</span>
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">East Africa Structural Excellence</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">Awarded for architectural complexity and structural engineering safety standards on commercial high-rise towers.</p>
+                    <span class="text-slate-400 text-xs font-bold block mb-2">{{ $awd->year }}</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">{{ $awd->title }}</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">{{ $awd->description }}</p>
                 </div>
-
-                <!-- Award 2 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="shield-check" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-slate-400 text-xs font-bold block mb-2">2025</span>
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">Federal HSE Safety Gold Medal</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">Recognized for executing over 1 million consecutive safe man-hours across municipal and civil site operations.</p>
-                </div>
-
-                <!-- Award 3 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="users-2" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-slate-400 text-xs font-bold block mb-2">2023</span>
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">National Housing Partner</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">Acknowledged for timely delivery and material quality standards in luxury residential and housing estates development.</p>
-                </div>
-
-                <!-- Award 4 -->
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="landmark" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-slate-400 text-xs font-bold block mb-2">2026</span>
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">Urban Development Catalyst</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">Presented for significant contributions to national roadway connections and civil engineering development infrastructure.</p>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -360,11 +296,13 @@
             <!-- Alpine.js Dynamic Testimonial Carousel -->
             <div x-data="{ 
                 active: 0,
-                testimonials: [
-                    { name: 'Dr. Elias Tekle', role: 'Commercial Director, Noah Real Estate', quote: 'Sador General Construction delivered our multi-story corporate tower six weeks ahead of schedule. Their technical competence, dedication to engineering precision, and safety standards are unmatched in Ethiopia.', rating: 5, avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop' },
-                    { name: 'Martha Girma', role: 'Managing Partner, Zola Luxury Apartments', quote: 'The aesthetic execution and attention to structural details on our luxury villa complex was phenomenal. Sador’s engineering team was responsive, consultative, and highly professional throughout the build.', rating: 5, avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop' },
-                    { name: 'Eng. Solomon Belay', role: 'Infrastructure Consultant, Federal Road Authority', quote: 'Managing complex civil grading and heavy asphalt paving requires high-capacity equipment and absolute safety control. Sador has consistently proven to be a premier partner for municipal works.', rating: 5, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop' }
-                ],
+                testimonials: @js($testimonials->map(fn($t) => [
+                    'name' => $t->client_name,
+                    'role' => $t->position,
+                    'quote' => $t->quote,
+                    'rating' => $t->rating,
+                    'avatar' => $t->photo_url
+                ])),
                 next() { this.active = (this.active + 1) % this.testimonials.length },
                 prev() { this.active = (this.active - 1 + this.testimonials.length) % this.testimonials.length },
                 autoplayInterval: null
@@ -403,7 +341,7 @@
                                 
                                 <!-- Author Bio -->
                                 <div class="flex items-center gap-4 pt-4">
-                                    <img :src="t.avatar" :alt="t.name" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md">
+                                    <img :src="t.avatar" :alt="t.name" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" loading="lazy">
                                     <div>
                                         <h4 class="font-bold text-slate-900" x-text="t.name"></h4>
                                         <p class="text-xs text-slate-400 font-semibold" x-text="t.role"></p>
@@ -512,7 +450,7 @@
     <section class="relative py-32 bg-slate-950 overflow-hidden text-white border-t border-slate-900">
         <!-- Background Asset with dark glowing orange overlay -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2671&auto=format&fit=crop" class="w-full h-full object-cover opacity-20" alt="CTA Building Background">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2671&auto=format&fit=crop" class="w-full h-full object-cover opacity-20" alt="CTA Building Background" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950 to-slate-950"></div>
         </div>
         

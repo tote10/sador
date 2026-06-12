@@ -1,12 +1,39 @@
 @extends('layouts.main')
 
-@section('title', $project['title'])
+@section('title', $project->title)
+@section('meta_description', Str::limit(strip_tags($project->description), 150))
 
 @section('content')
+@php
+    $src = $project->cover_url;
+    $cat_label = ucfirst($project->category);
+    $year = $project->year;
+    $loc = $project->location;
+    $budget = $project->budget;
+    $duration = $project->duration;
+    $client = $project->client_name;
+    $status = $project->status;
+    $desc = $project->description;
+
+    $loc_label = str_contains(strtolower($loc), 'addis ababa') ? 'Addis Ababa' : (str_contains(strtolower($loc), 'hawassa') ? 'Hawassa' : (str_contains(strtolower($loc), 'adama') ? 'Adama' : $loc));
+    $scale = 'Grade-1 Premium';
+    $challenges = 'Overcoming tight schedule constraints and maintaining strict quality and environmental standards throughout the project execution.';
+    $solutions = 'Deployed high-efficiency construction crews, advanced scheduling tools, and optimized supply-chain tracking to complete all project milestones on time.';
+    $testimonial = 'Sador General Construction demonstrated professional excellence, delivery discipline, and high-quality standards.';
+    $client_person = $client;
+    $client_title = 'Project Representative';
+    
+    // Gallery images
+    $images = $project->images->map(fn($img) => $img->url)->toArray();
+    if (empty($images)) {
+        $images = [$src];
+    }
+@endphp
+
     <!-- Hero -->
     <section class="relative min-h-[70vh] flex items-end pt-28 pb-16 text-white overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="{{ $project['src'] }}" alt="{{ $project['title'] }}" class="w-full h-full object-cover">
+            <img src="{{ $src }}" alt="{{ $project->title }}" class="w-full h-full object-cover" fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent"></div>
         </div>
@@ -19,20 +46,20 @@
 
             <div class="flex flex-wrap items-center gap-3 mb-4">
                 <span class="bg-gradient-to-r from-sador-orange to-amber-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3.5 py-1.5 rounded-lg">
-                    {{ $project['cat_label'] }}
+                    {{ $cat_label }}
                 </span>
                 <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
                     <i data-lucide="calendar" class="w-3.5 h-3.5 text-sador-orange"></i>
-                    {{ $project['year'] }}
+                    {{ $year }}
                 </span>
             </div>
 
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight mb-4 max-w-4xl leading-tight">
-                {{ $project['title'] }}
+                {{ $project->title }}
             </h1>
             <p class="text-slate-300 text-sm flex items-center gap-2 font-light">
                 <i data-lucide="map-pin" class="w-4 h-4 text-sador-orange shrink-0"></i>
-                {{ $project['loc'] }}
+                {{ $loc }}
             </p>
         </div>
     </section>
@@ -43,25 +70,25 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 bg-white rounded-3xl shadow-2xl shadow-slate-200/60 border border-slate-100 p-6 md:p-8" data-aos="fade-up">
                 <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
                     <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Budget</div>
-                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['budget'] }}</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $budget }}</div>
                 </div>
                 <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
                     <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Duration</div>
-                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['duration'] }}</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $duration }}</div>
                 </div>
                 <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
                     <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Client</div>
-                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['client'] }}</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $client }}</div>
                 </div>
                 <div class="text-center md:text-left p-4 border-b md:border-b-0 md:border-r border-slate-100 last:border-0">
                     <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Location</div>
-                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $project['loc_label'] }}</div>
+                    <div class="text-sm md:text-base font-bold text-slate-900">{{ $loc_label }}</div>
                 </div>
                 <div class="text-center md:text-left p-4 col-span-2 md:col-span-1">
                     <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">Status</div>
                     <div class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg">
                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        {{ $project['status'] }}
+                        {{ $status }}
                     </div>
                 </div>
             </div>
@@ -75,56 +102,29 @@
                 <div data-aos="fade-right">
                     <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Project Overview</span>
                     <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 mb-6">Full Description</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed">{{ $project['desc'] }}</p>
-                    <div class="mt-8 flex items-center gap-3 text-xs text-slate-500 font-semibold">
-                        <i data-lucide="gauge" class="w-4 h-4 text-sador-orange"></i>
-                        <span>Scope: {{ $project['scale'] }}</span>
-                    </div>
-                </div>
-
-                <div class="space-y-8" data-aos="fade-left">
-                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg shadow-slate-200/40">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
-                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-900">Challenges</h3>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed">{{ $project['challenges'] }}</p>
-                    </div>
-
-                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg shadow-slate-200/40">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                <i data-lucide="lightbulb" class="w-5 h-5"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-900">Solutions</h3>
-                        </div>
-                        <p class="text-slate-600 text-sm leading-relaxed">{{ $project['solutions'] }}</p>
-                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed">{{ Str::limit($desc, 200) }}</p>
                 </div>
             </div>
         </div>
     </section>
 
-    @if (!empty($project['images']))
+    @if (!empty($images))
     <!-- Image Gallery with Lightbox -->
-    <section class="py-24 bg-white" x-data="{ lightboxOpen: false, activeImage: 0, images: {{ json_encode($project['images']) }} }">
+    <section class="py-24 bg-white" x-data="{ lightboxOpen: false, activeImage: 0, images: {{ json_encode($images) }} }">
         <div class="container mx-auto px-4 max-w-7xl">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
                 <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Visual Documentation</span>
                 <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 mb-4">Project Gallery</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-sador-orange to-amber-500 mx-auto rounded-full"></div>
             </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($project['images'] as $index => $image)
+                @foreach ($images as $index => $image)
                 <button type="button"
                         @click="activeImage = {{ $index }}; lightboxOpen = true"
                         class="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-slate-200 focus:outline-none focus:ring-2 focus:ring-sador-orange focus:ring-offset-2"
                         data-aos="fade-up"
                         data-aos-delay="{{ $index * 50 }}">
-                    <img src="{{ $image }}" alt="{{ $project['title'] }} — view {{ $index + 1 }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="{{ $image }}" alt="{{ $project->title }} — view {{ $index + 1 }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/40 transition-colors flex items-center justify-center">
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-slate-900">
                             <i data-lucide="maximize-2" class="w-5 h-5"></i>
@@ -160,7 +160,7 @@
             <template x-for="(img, index) in images" :key="index">
                 <img x-show="activeImage === index"
                      :src="img"
-                     alt="{{ $project['title'] }}"
+                     alt="{{ $project->title }}"
                      class="max-h-[85vh] max-w-full object-contain rounded-2xl shadow-2xl"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 scale-95"
@@ -178,35 +178,7 @@
     </section>
     @endif
 
-    <!-- Client Testimonial -->
-    <section class="py-24 bg-white">
-        <div class="container mx-auto px-4 max-w-7xl">
-            <div class="max-w-4xl mx-auto relative" data-aos="fade-up">
-                <div class="absolute -inset-1 bg-gradient-to-r from-sador-orange via-amber-400 to-sador-blue rounded-[36px] opacity-20 blur-xl"></div>
-                <blockquote class="relative bg-slate-950 text-white rounded-[32px] p-10 md:p-16 border border-slate-800 shadow-2xl overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-sador-orange/10 rounded-full filter blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-sador-blue/20 rounded-full filter blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-1 text-amber-400 mb-6">
-                            @for ($i = 0; $i < 5; $i++)
-                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
-                            @endfor
-                        </div>
-                        <p class="text-lg md:text-xl text-slate-200 italic leading-relaxed font-light mb-8">
-                            "{{ $project['testimonial'] }}"
-                        </p>
-                        <footer class="border-t border-slate-800 pt-6">
-                            <cite class="not-italic">
-                                <div class="font-bold text-white text-lg">{{ $project['client_person'] }}</div>
-                                <div class="text-slate-400 text-sm mt-1">{{ $project['client_title'] }}</div>
-                            </cite>
-                        </footer>
-                    </div>
-                </blockquote>
-            </div>
-        </div>
-    </section>
 
     <!-- CTA -->
     <section class="bg-slate-950 py-20 relative overflow-hidden text-white border-t border-slate-900">
