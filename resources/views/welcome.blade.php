@@ -471,9 +471,9 @@
                     <a href="/contact" class="bg-gradient-to-r from-sador-orange to-amber-500 text-white px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest hover:opacity-95 shadow-xl shadow-sador-orange/20 transition-all">
                         Contact Us
                     </a>
-                    <a href="tel:+251911000000" class="bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                    <a href="tel:+251911708175" class="bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2">
                         <i data-lucide="phone-call" class="w-4 h-4 text-sador-orange"></i>
-                        Direct Call: +251 911 00 00 00
+                        Direct Call: +251 911 70 81 75
                     </a>
                 </div>
             </div>
