@@ -5,7 +5,7 @@
 
     <div class="container mx-auto px-4 max-w-7xl relative z-10">
         <!-- Top Footer Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-slate-900">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 pb-16 border-b border-slate-900">
             <!-- Brand Section -->
             <div class="space-y-6">
                 <a href="/" class="flex items-center block mb-6">
@@ -88,30 +88,6 @@
                         <span>Mon - Sat: 8:00 AM - 5:30 PM</span>
                     </li>
                 </ul>
-            </div>
-
-            <!-- Portal / Newsletter Section -->
-            <div class="space-y-6">
-                <div>
-                    <h4 class="text-sm font-display font-bold uppercase tracking-wider text-slate-100 mb-4 flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-sador-orange"></span>
-                        Newsletter
-                    </h4>
-                    <p class="text-slate-400 text-xs mb-4 leading-relaxed">Subscribe to get insights, structural trend whitepapers, and local vacancy alerts.</p>
-                    <form class="flex w-full group">
-                        <input type="email" placeholder="Your Email" class="w-full bg-slate-900 border border-slate-800 rounded-l-xl px-4 py-3 text-sm focus:outline-none focus:border-sador-orange text-white placeholder-slate-500 transition-colors">
-                        <button type="submit" class="bg-sador-orange hover:bg-orange-600 text-white px-5 rounded-r-xl transition-colors flex items-center justify-center">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                        </button>
-                    </form>
-                </div>
-
-                <div class="pt-4 border-t border-slate-900">
-                    <a href="/login" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sador-orange hover:text-white border border-sador-orange hover:border-white px-5 py-3 rounded-xl transition-all duration-300">
-                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
-                        Admin Portal
-                    </a>
-                </div>
             </div>
         </div>
 
