@@ -114,13 +114,13 @@
 
             <!-- Drawer Footer Contact Details -->
             <div class="pt-6 border-t border-slate-100 space-y-4">
-                <a href="tel:+251911000000" class="flex items-center gap-3 px-4 py-2.5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-xs font-semibold text-slate-700">
+                <a href="tel:+251911708175" class="flex items-center gap-3 px-4 py-2.5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-xs font-semibold text-slate-700">
                     <i data-lucide="phone" class="w-4 h-4 text-sador-orange"></i>
-                    +251 911 00 00 00
+                    +2519 11 70 81 75
                 </a>
-                <a href="mailto:info@sadorconstruction.com" class="flex items-center gap-3 px-4 py-2.5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-xs font-semibold text-slate-700">
+                <a href="mailto:Sadorgcsador@gmail.com" class="flex items-center gap-3 px-4 py-2.5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-xs font-semibold text-slate-700">
                     <i data-lucide="mail" class="w-4 h-4 text-sador-orange"></i>
-                    info@sadorconstruction.com
+                    Sadorgcsador@gmail.com
                 </a>
                 <a href="/contact" class="block w-full py-4 bg-gradient-to-r from-sador-orange to-amber-500 hover:opacity-90 text-white rounded-xl text-center font-display font-extrabold text-sm uppercase tracking-widest shadow-lg shadow-sador-orange/20 transition-all">
                     Contact Us

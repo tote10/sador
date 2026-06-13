@@ -15,14 +15,14 @@
                     Building East Africa's future with engineering precision, compromise-free structural integrity, and architectural luxury. 
                 </p>
                 <div class="flex items-center space-x-3 pt-2">
-                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400" title="Facebook">
                         <i data-lucide="facebook" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400" title="LinkedIn">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400">
-                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-sador-orange hover:text-white transition-all duration-300 text-slate-400" title="Telegram">
+                        <i data-lucide="send" class="w-5 h-5"></i>
                     </a>
                 </div>
             </div>
@@ -70,15 +70,18 @@
                 <ul class="space-y-4 text-sm text-slate-400 font-medium">
                     <li class="flex items-start gap-3">
                         <i data-lucide="map-pin" class="w-5 h-5 text-sador-orange shrink-0 mt-0.5"></i>
-                        <span>Bole Sub City, Woreda 03, Addis Ababa, Ethiopia</span>
+                        <span>ADDISABABA, ALEMNESH plaza building 13TH floor, Room No.1303</span>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <i data-lucide="phone" class="w-5 h-5 text-sador-orange shrink-0"></i>
-                        <a href="tel:+251911000000" class="hover:text-sador-orange transition-colors">+251 911 00 00 00</a>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="phone" class="w-5 h-5 text-sador-orange shrink-0 mt-0.5"></i>
+                        <div>
+                            <a href="tel:+251911708175" class="hover:text-sador-orange transition-colors block">+2519 11 70 81 75</a>
+                            <a href="tel:+251976808076" class="hover:text-sador-orange transition-colors block">+2519 76 80 80 76</a>
+                        </div>
                     </li>
                     <li class="flex items-center gap-3">
                         <i data-lucide="mail" class="w-5 h-5 text-sador-orange shrink-0"></i>
-                        <a href="mailto:info@sadorconstruction.com" class="hover:text-sador-orange transition-colors">info@sadorconstruction.com</a>
+                        <a href="mailto:Sadorgcsador@gmail.com" class="hover:text-sador-orange transition-colors">Sadorgcsador@gmail.com</a>
                     </li>
                     <li class="flex items-center gap-3">
                         <i data-lucide="clock" class="w-5 h-5 text-sador-orange shrink-0"></i>
