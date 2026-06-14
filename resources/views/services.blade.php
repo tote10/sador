@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Engineering & Construction Services')
+@section('meta_description', 'Commercial, residential and heavy civil construction services — turnkey project management, aluminium cladding, finishing and infrastructure works delivered with engineering precision.')
 
 @section('content')
     <!-- Page Header -->
@@ -35,7 +36,7 @@
                 }
 
                 // Map badge
-                $badge = 'Grade-1 Certified';
+                $badge = 'Commercial Expertise';
                 if (str_contains(strtolower($serv->slug), 'residential') || str_contains(strtolower($serv->title), 'residential')) {
                     $badge = 'Bespoke Luxury';
                 } elseif (str_contains(strtolower($serv->slug), 'civil') || str_contains(strtolower($serv->slug), 'infrastructure') || str_contains(strtolower($serv->title), 'infrastructure') || str_contains(strtolower($serv->title), 'civil')) {
@@ -110,7 +111,13 @@
                 </div>
             </div>
             @endforeach
-            
+
+            @if($services->hasPages())
+                <div class="pt-4">
+                    {{ $services->links() }}
+                </div>
+            @endif
+
         </div>
     </section>
 

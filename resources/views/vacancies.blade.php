@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Careers at Sador')
+@section('meta_description', 'Join Sador General Construction. Explore open engineering, site and management roles, or submit a speculative application to build your career with us.')
 
 @section('content')
     <!-- Page Header -->
@@ -83,6 +84,12 @@
                     </div>
                 @endforelse
 
+                @if($vacancies->hasPages())
+                    <div class="pt-4">
+                        {{ $vacancies->links() }}
+                    </div>
+                @endif
+
                 <!-- Application Slide-out Modal Overlay -->
                 <div x-show="activeJob !== null" 
                      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
@@ -107,7 +114,7 @@
                             </button>
                         </div>
 
-                        <form :action="'/vacancies/' + activeJob + '/apply'" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <form :action="activeJob === 0 ? '{{ route('careers.apply') }}' : '/vacancies/' + activeJob + '/apply'" method="POST" enctype="multipart/form-data" class="space-y-4">
                             @csrf
                             
                             <div>

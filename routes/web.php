@@ -19,12 +19,15 @@ use App\Http\Controllers\Admin\SettingController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/services', function () {
-    $services = \App\Models\Service::published()->get();
+    $services = \App\Models\Service::published()->paginate(9);
     return view('services', compact('services'));
 });
 
 Route::get('/projects', function () {
-    $projects = \App\Models\Project::with('coverImage')->published()->latest()->get();
+    // Capped (not paginated) because the page filters client-side over the full set via Alpine.js;
+    // paginating would break the category/year/location dropdowns. Revisit with server-side
+    // filtering if published projects ever exceed this cap.
+    $projects = \App\Models\Project::with('coverImage')->published()->latest()->take(60)->get();
     return view('projects', compact('projects'));
 });
 
@@ -41,7 +44,7 @@ Route::get('/about', function () {
 });
 
 Route::get('/vacancies', function () {
-    $vacancies = \App\Models\Vacancy::open()->latest()->get();
+    $vacancies = \App\Models\Vacancy::open()->latest()->paginate(10);
     return view('vacancies', compact('vacancies'));
 });
 
@@ -73,6 +76,10 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
         'cv' => 'required|file|mimes:pdf,doc,docx|max:10240',
     ]);
 
+    if (!$vacancy->is_open) {
+        return back()->with('error', 'This vacancy is no longer accepting applications.');
+    }
+
     $cvPath = $request->file('cv')->store('applicants/cvs', 'local');
 
     \App\Models\Applicant::create([
@@ -87,6 +94,67 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
 
     return back()->with('success', 'Your application has been submitted successfully.');
 })->middleware('throttle:5,1')->name('vacancies.apply');
+
+// General / speculative application (not tied to a specific vacancy)
+Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
+    $request->validate([
+        'full_name' => 'required|string|max:255',
+        'phone' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'nullable|string',
+        'cv' => 'required|file|mimes:pdf,doc,docx|max:10240',
+    ]);
+
+    $cvPath = $request->file('cv')->store('applicants/cvs', 'local');
+
+    \App\Models\Applicant::create([
+        'vacancy_id' => null,
+        'full_name' => $request->full_name,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'message' => $request->message,
+        'cv_path' => $cvPath,
+        'status' => 'new',
+    ]);
+
+    return back()->with('success', 'Your application has been submitted successfully.');
+})->middleware('throttle:5,1')->name('careers.apply');
+
+// ======================
+// SEO: sitemap & robots
+// ======================
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        ['loc' => url('/'),         'priority' => '1.0'],
+        ['loc' => url('/about'),    'priority' => '0.8'],
+        ['loc' => url('/services'), 'priority' => '0.8'],
+        ['loc' => url('/projects'), 'priority' => '0.8'],
+        ['loc' => url('/vacancies'),'priority' => '0.7'],
+        ['loc' => url('/contact'),  'priority' => '0.7'],
+    ];
+
+    foreach (\App\Models\Project::published()->get() as $project) {
+        $urls[] = ['loc' => url('/projects/' . $project->slug), 'priority' => '0.6'];
+    }
+
+    $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls as $u) {
+        $xml .= '  <url><loc>' . htmlspecialchars($u['loc'], ENT_XML1) . '</loc><priority>' . $u['priority'] . '</priority></url>' . "\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
+})->name('sitemap');
+
+Route::get('/robots.txt', function () {
+    $content = "User-agent: *\n"
+        . "Disallow: /admin\n"
+        . "Disallow: /login\n\n"
+        . 'Sitemap: ' . url('/sitemap.xml') . "\n";
+
+    return response($content, 200, ['Content-Type' => 'text/plain']);
+})->name('robots');
 
 
 // ======================

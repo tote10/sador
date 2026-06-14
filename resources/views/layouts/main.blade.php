@@ -1,11 +1,56 @@
+@php
+    $siteName = 'Sador General Construction';
+    $defaultDescription = 'Sador General Construction is a trusted general contractor delivering premier commercial, residential, and civil infrastructure projects across Ethiopia.';
+    $ogImageDefault = asset('images/hero-building1.jpg');
+@endphp
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Sador General Construction</title>
-    <meta name="description" content="@yield('meta_description', 'Sador General Construction is a Grade-1 General Contractor delivering premier commercial, residential, and civil infrastructure projects across Ethiopia.')">
+    <title>@yield('title') - {{ $siteName }}</title>
+    <meta name="description" content="@yield('meta_description', $defaultDescription)">
+    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta name="theme-color" content="#003087">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+
+    {{-- Open Graph / Facebook --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="@yield('title') - {{ $siteName }}">
+    <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="@yield('og_image', $ogImageDefault)">
+    <meta property="og:locale" content="en_US">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title') - {{ $siteName }}">
+    <meta name="twitter:description" content="@yield('meta_description', $defaultDescription)">
+    <meta name="twitter:image" content="@yield('og_image', $ogImageDefault)">
+
+    {{-- Organization structured data (JSON-LD) --}}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "GeneralContractor",
+        "name": "Sador General Construction",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('images/logo.png') }}",
+        "image": "{{ asset('images/hero-building1.jpg') }}",
+        "telephone": "+251911708175",
+        "email": "Sadorgcsador@gmail.com",
+        "foundingDate": "2019",
+        "areaServed": "ET",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Alemnesh Plaza, 13th Floor, Room 1303",
+            "addressLocality": "Addis Ababa",
+            "addressCountry": "ET"
+        }
+    }
+    </script>
     
     <!-- Preconnections -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

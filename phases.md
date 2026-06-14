@@ -1,45 +1,6 @@
 Total Estimated Time: 4 Weeks (24 working days)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 PhaseDurationWorking DaysStatusPhase 14 daysSetup-Phase 25 daysCore Structure-Phase 36 daysMain Features-Phase 45 daysAdmin Panel-Phase 54 daysPolish + SEO-
 
 PHASE 1: Project Setup (4 Days)

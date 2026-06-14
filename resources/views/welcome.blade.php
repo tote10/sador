@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Leading Construction & Infrastructure in Ethiopia')
+@section('meta_description', 'Sador General Construction builds commercial towers, residential complexes and civil infrastructure across Ethiopia — delivered on time, on budget, and to the highest safety standards.')
 
 @section('content')
     <!-- Hero Section -->
@@ -236,7 +237,7 @@
                 </div>
                 <div data-aos="zoom-in" data-aos-delay="200" class="pt-8 lg:pt-0 lg:px-4">
                     <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        120<span class="text-sador-orange font-bold">+</span>
+                        15<span class="text-sador-orange font-bold">+</span>
                     </div>
                     <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Major Handed-Over Projects</div>
                 </div>
@@ -256,6 +257,7 @@
         </div>
     </section>
 
+    @if($awards->count())
     <!-- Awards & Recognitions -->
     <section class="py-28 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 max-w-7xl relative z-10">
@@ -283,6 +285,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Testimonials Slider Section -->
     <section class="py-28 bg-white relative">
@@ -341,7 +344,12 @@
                                 
                                 <!-- Author Bio -->
                                 <div class="flex items-center gap-4 pt-4">
-                                    <img :src="t.avatar" :alt="t.name" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" loading="lazy">
+                                    <template x-if="t.avatar">
+                                        <img :src="t.avatar" :alt="t.name" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" loading="lazy">
+                                    </template>
+                                    <template x-if="!t.avatar">
+                                        <div class="w-14 h-14 rounded-full bg-sador-blue/10 text-sador-blue flex items-center justify-center font-bold text-lg border-2 border-white shadow-md" x-text="t.name ? t.name.charAt(0) : '★'"></div>
+                                    </template>
                                     <div>
                                         <h4 class="font-bold text-slate-900" x-text="t.name"></h4>
                                         <p class="text-xs text-slate-400 font-semibold" x-text="t.role"></p>
@@ -450,7 +458,7 @@
     <section class="relative py-32 bg-slate-950 overflow-hidden text-white border-t border-slate-900">
         <!-- Background Asset with dark glowing orange overlay -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2671&auto=format&fit=crop" class="w-full h-full object-cover opacity-20" alt="CTA Building Background" loading="lazy">
+            <img src="{{ asset('images/hero-building3.jpg') }}" class="w-full h-full object-cover opacity-20" alt="Sador construction project background" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950 to-slate-950"></div>
         </div>
         

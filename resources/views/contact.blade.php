@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Get in Touch with Our Engineers')
+@section('meta_description', 'Contact Sador General Construction in Addis Ababa for project estimates, feasibility surveys and career enquiries. Call +251 911 708175 or email Sadorgcsador@gmail.com.')
 
 @section('content')
     <!-- Page Header -->
@@ -15,7 +16,7 @@
         <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Corporate Contact</span>
         <h1 class="text-4xl sm:text-6xl font-display font-extrabold mb-6 tracking-tight">Connect With Us</h1>
         <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
-            Whether you need a Grade-1 project estimate, a feasibility survey, or career details, our engineers are here to assist.
+            Whether you need a project estimate, a feasibility survey, or career details, our engineers are here to assist.
         </p>
     </div>
 </div>

@@ -16,7 +16,7 @@
     $desc = $project->description;
 
     $loc_label = str_contains(strtolower($loc), 'addis ababa') ? 'Addis Ababa' : (str_contains(strtolower($loc), 'hawassa') ? 'Hawassa' : (str_contains(strtolower($loc), 'adama') ? 'Adama' : $loc));
-    $scale = 'Grade-1 Premium';
+    $scale = 'Premium Build';
     $challenges = 'Overcoming tight schedule constraints and maintaining strict quality and environmental standards throughout the project execution.';
     $solutions = 'Deployed high-efficiency construction crews, advanced scheduling tools, and optimized supply-chain tracking to complete all project milestones on time.';
     $testimonial = 'Sador General Construction demonstrated professional excellence, delivery discipline, and high-quality standards.';

@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'About Our Legacy')
+@section('meta_description', 'Founded by Eng. Tinsae Fikadu, Sador General Construction delivers reliable civil construction across Ethiopia. Meet our leadership and organizational structure.')
 
 @section('content')
     <!-- Page Header -->
@@ -35,12 +36,12 @@
 
                     <div class="grid grid-cols-2 gap-6 pt-4">
                         <div class="border-l-4 border-sador-orange pl-4">
-                            <div class="text-2xl font-bold text-slate-900 font-display">120+</div>
+                            <div class="text-2xl font-bold text-slate-900 font-display">15+</div>
                             <div class="text-xs text-slate-400 font-semibold uppercase tracking-wide">Projects Completed</div>
                         </div>
                         <div class="border-l-4 border-sador-blue pl-4">
-                            <div class="text-2xl font-bold text-slate-900 font-display">Grade-1</div>
-                            <div class="text-xs text-slate-400 font-semibold uppercase tracking-wide">General Contractor</div>
+                            <div class="text-2xl font-bold text-slate-900 font-display">G+11</div>
+                            <div class="text-xs text-slate-400 font-semibold uppercase tracking-wide">High-Rise Capacity</div>
                         </div>
                     </div>
                 </div>
@@ -72,8 +73,8 @@
                 @php
                     $timeline = [
                         ['year' => '2011', 'title' => 'Founding of Sador', 'desc' => 'Started with a select team of dedicated civil contractors, executing residential complexes in Addis Ababa.'],
-                        ['year' => '2015', 'title' => 'Upgrade to Class-3 Contractor', 'desc' => 'Obtained larger regional credentials, transitioning into large-scale commercial structures and multi-story warehouses.'],
-                        ['year' => '2020', 'title' => 'Grade-1 Licensure Integration', 'desc' => 'Officially accredited as a Class-1 General Contractor in Ethiopia, gaining capacity for heavy municipal works.'],
+                        ['year' => '2023', 'title' => 'First Flagship Delivery', 'desc' => 'Completed the five-storey Industrial Shade (G+4, 750 sq.m) in just three months for the Addis Ababa City Design & Construction Bureau.'],
+                        ['year' => '2025', 'title' => 'Major Government Contracts', 'desc' => 'Delivered the Fitawrari Habtegiorgis administration complex and the Low-Cost 55-Homes apartment project ahead of schedule.'],
                         ['year' => '2026', 'title' => 'The Innovation & Tech Era', 'desc' => 'Pioneering structural pre-fabrication, green-building certifications, and tech-driven resource scheduling.']
                     ];
                 @endphp
@@ -149,36 +150,208 @@
         </div>
     </section>
 
-    <!-- Leadership Section -->
+    <!-- Organizational Hierarchy Section -->
     <section class="py-24 bg-slate-50 relative overflow-hidden">
-        <div class="container mx-auto px-4 max-w-7xl text-center">
-            <div class="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
-                <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Expert Team</span>
-                <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-slate-900 mb-6">Executive Board & Partners</h2>
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="text-sador-orange font-extrabold tracking-widest uppercase text-xs mb-3 block">Our People</span>
+                <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-slate-900 mb-6">Organizational Structure</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-sador-orange to-amber-500 mx-auto rounded-full"></div>
             </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                @php
-                    $team = [
-                        ['name' => 'Eng. Tinsae Fikadu', 'role' => 'C0-Founder, GM', 'img' => 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop'],
-                        ['name' => 'Eng. Mintesinot', 'role' => 'Contractor', 'img' => 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop']
-                    ];
-                @endphp
 
-                @foreach($team as $i => $t)
-                <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
-                    <div class="relative aspect-[4/5] bg-slate-100 overflow-hidden">
-                        <img src="{{ $t['img'] }}" alt="{{ $t['name'] }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-display font-extrabold text-slate-900 text-lg leading-tight">{{ $t['name'] }}</h4>
-                        <span class="text-sador-orange text-xs font-semibold block mt-2 uppercase tracking-wider">{{ $t['role'] }}</span>
-                    </div>
+            <div class="org-scroll" data-aos="fade-up">
+                <div class="org-fit">
+                <ul class="org-tree">
+                    <li>
+                        <div class="org-node gm">
+                            <span class="org-avatar">TF</span>
+                            <span class="org-name">Tinsae Fikadu</span>
+                            <span class="org-role">General Manager</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="org-node deputy">
+                                    <span class="org-avatar">MS</span>
+                                    <span class="org-name">Mintesinot Seifu</span>
+                                    <span class="org-role">Deputy General Manager</span>
+                                </div>
+                                <ul>
+                                    {{-- Finance --}}
+                                    <li>
+                                        <div class="org-node finance">
+                                            <span class="org-avatar">Y</span>
+                                            <span class="org-name">Yisfa</span>
+                                            <span class="org-role">Finance</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="org-node staff">
+                                                    <span class="org-avatar">SM</span>
+                                                    <span class="org-name">Slle Enat Mekonen</span>
+                                                    <span class="org-role muted">Accountant</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    {{-- Engineering --}}
+                                    <li>
+                                        <div class="org-node engineering">
+                                            <span class="org-avatar">AA</span>
+                                            <span class="org-name">Adoniyas Abera</span>
+                                            <span class="org-role">Engineering Department</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="org-node staff">
+                                                    <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                    <span class="org-name">Office Engineer</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="org-node staff">
+                                                    <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                    <span class="org-name">Office Engineer</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="org-node lead">
+                                                    <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                    <span class="org-name">Project Manager</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="org-node staff">
+                                                            <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                            <span class="org-name">Site Engineer</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="org-node staff">
+                                                            <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                            <span class="org-name">Forman</span>
+                                                        </div>
+                                                        <ul>
+                                                            <li>
+                                                                <div class="org-node staff">
+                                                                    <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                                    <span class="org-name">Gang Leader</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    {{-- Human Resource --}}
+                                    <li>
+                                        <div class="org-node hr">
+                                            <span class="org-avatar">L</span>
+                                            <span class="org-name">Lamesgen</span>
+                                            <span class="org-role">Human Resource</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="org-node staff">
+                                                    <span class="org-avatar">H</span>
+                                                    <span class="org-name">Hana</span>
+                                                    <span class="org-role muted">Office HR</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    {{-- Procurement --}}
+                                    <li>
+                                        <div class="org-node procurement">
+                                            <span class="org-avatar">G</span>
+                                            <span class="org-name">Gemechis</span>
+                                            <span class="org-role">Procurement &amp; Store</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="org-node staff">
+                                                    <span class="org-avatar"><i data-lucide="user"></i></span>
+                                                    <span class="org-name">Store</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
                 </div>
-                @endforeach
             </div>
         </div>
     </section>
+
+    {{-- Self-contained styling for the organizational chart (horizontal tree, auto-scaled to fit any screen) --}}
+    <style>
+        .org-scroll { overflow-x: auto; padding: 0.5rem 0 1rem; text-align: center; }
+        .org-fit { display: inline-block; transform-origin: top center; }
+        .org-tree { display: flex; justify-content: center; min-width: max-content; margin: 0 auto; }
+        .org-tree ul { display: flex; justify-content: center; padding-top: 22px; position: relative; }
+        .org-tree li { list-style: none; position: relative; padding: 22px 5px 0; display: flex; flex-direction: column; align-items: center; }
+        .org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #cbd5e1; width: 50%; height: 22px; }
+        .org-tree li::after { right: auto; left: 50%; border-left: 2px solid #cbd5e1; }
+        .org-tree > li { padding-top: 0; }
+        .org-tree > li::before, .org-tree > li::after { display: none; }
+        .org-tree li:only-child::before, .org-tree li:only-child::after { display: none; }
+        .org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+        .org-tree li:last-child::before { border-right: 2px solid #cbd5e1; border-radius: 0 6px 0 0; }
+        .org-tree li:first-child::after { border-radius: 6px 0 0 0; }
+        .org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #cbd5e1; width: 0; height: 22px; }
+
+        .org-node { width: 7.5rem; border-radius: .85rem; padding: .7rem .5rem; display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid transparent; box-shadow: 0 8px 18px -10px rgba(15, 23, 42, 0.3); transition: transform .2s ease, box-shadow .2s ease; }
+        .org-node:hover { transform: translateY(-3px); box-shadow: 0 16px 28px -12px rgba(15, 23, 42, 0.4); }
+        .org-avatar { width: 2.25rem; height: 2.25rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .72rem; margin-bottom: .5rem; }
+        .org-avatar svg { width: 1.1rem; height: 1.1rem; }
+        .org-name { font-weight: 700; font-size: .76rem; line-height: 1.15; }
+        .org-role { font-size: .64rem; margin-top: .25rem; opacity: .85; }
+        .org-role.muted { color: #64748b; opacity: 1; }
+
+        .org-node.gm { background: #1e293b; color: #fff; }
+        .org-node.gm .org-avatar { background: rgba(255,255,255,.15); color: #fff; }
+        .org-node.deputy { background: #2563eb; color: #fff; }
+        .org-node.deputy .org-avatar { background: rgba(255,255,255,.22); color: #fff; }
+        .org-node.finance { background: #dbeafe; border-color: #bfdbfe; color: #1e293b; }
+        .org-node.finance .org-avatar { background: #3b82f6; color: #fff; }
+        .org-node.engineering { background: #d1fae5; border-color: #a7f3d0; color: #1e293b; }
+        .org-node.engineering .org-avatar { background: #10b981; color: #fff; }
+        .org-node.hr { background: #ffedd5; border-color: #fed7aa; color: #1e293b; }
+        .org-node.hr .org-avatar { background: #fb923c; color: #fff; }
+        .org-node.procurement { background: #fef3c7; border-color: #fde68a; color: #1e293b; }
+        .org-node.procurement .org-avatar { background: #f59e0b; color: #fff; }
+        .org-node.lead { background: #eff6ff; border-color: #bfdbfe; color: #1e293b; }
+        .org-node.lead .org-avatar { background: #60a5fa; color: #fff; }
+        .org-node.staff { background: #fff; border-color: #e2e8f0; color: #334155; }
+        .org-node.staff .org-avatar { background: #e2e8f0; color: #64748b; }
+    </style>
+
+    {{-- Auto-scale the org chart so it always fits the viewport (no awkward overflow on mobile) --}}
+    <script>
+        (function () {
+            function fitOrgChart() {
+                document.querySelectorAll('.org-scroll').forEach(function (box) {
+                    var fit = box.querySelector('.org-fit');
+                    if (!fit) return;
+                    fit.style.transform = 'none';
+                    fit.style.height = '';
+                    var naturalW = fit.offsetWidth;
+                    var naturalH = fit.offsetHeight;
+                    var available = box.clientWidth;
+                    var scale = naturalW > available ? available / naturalW : 1;
+                    fit.style.transform = 'scale(' + scale + ')';
+                    fit.style.height = (naturalH * scale) + 'px';
+                });
+            }
+            window.addEventListener('load', fitOrgChart);
+            window.addEventListener('resize', fitOrgChart);
+            document.addEventListener('DOMContentLoaded', function () { setTimeout(fitOrgChart, 350); });
+        })();
+    </script>
 @endsection

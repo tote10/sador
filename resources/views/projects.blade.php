@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Our Architectural & Infrastructure Portfolio')
+@section('meta_description', 'Explore Sador General Construction\'s portfolio of completed commercial buildings, residential complexes, and civil infrastructure projects across Ethiopia.')
 
 @section('content')
     <!-- Page Header -->

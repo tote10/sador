@@ -20,6 +20,10 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /auth.json
+# Backup/source archives — should never be committed
+*.zip
+*.tar
+*.tar.gz
 /.fleet
 /.idea
 /.nova
