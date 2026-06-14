@@ -24,8 +24,8 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        $testimonials = Testimonial::published()->get();
-        $awards = Award::published()->get();
+        $testimonials = Testimonial::published()->take(12)->get();
+        $awards = Award::published()->take(12)->get();
 
         return view('welcome', compact('featuredProjects', 'services', 'testimonials', 'awards'));
     }

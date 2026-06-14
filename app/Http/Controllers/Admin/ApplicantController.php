@@ -28,17 +28,17 @@ class ApplicantController extends Controller
 
     public function downloadCv(Applicant $applicant)
     {
-        if (!$applicant->cv_path || !Storage::disk('public')->exists($applicant->cv_path)) {
+        if (!$applicant->cv_path || !Storage::disk('local')->exists($applicant->cv_path)) {
             return back()->with('error', 'CV file not found on server.');
         }
 
-        return Storage::disk('public')->download($applicant->cv_path, $applicant->full_name . ' - CV.' . pathinfo($applicant->cv_path, PATHINFO_EXTENSION));
+        return Storage::disk('local')->download($applicant->cv_path, $applicant->full_name . ' - CV.' . pathinfo($applicant->cv_path, PATHINFO_EXTENSION));
     }
 
     public function destroy(Applicant $applicant)
     {
         if ($applicant->cv_path) {
-            Storage::disk('public')->delete($applicant->cv_path);
+            Storage::disk('local')->delete($applicant->cv_path);
         }
         $applicant->delete();
 

@@ -17,15 +17,20 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->except('_token', '_method');
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'company_phone' => 'required|string|max:255',
+            'company_email' => 'required|email|max:255',
+            'whatsapp_number' => 'required|string|max:255',
+            'working_hours' => 'required|string|max:255',
+            'company_address' => 'required|string|max:255',
+        ]);
 
-        foreach ($data as $key => $value) {
-            if ($value !== null) {
-                Setting::updateOrCreate(
-                    ['key' => $key],
-                    ['value' => $value]
-                );
-            }
+        foreach ($validated as $key => $value) {
+            Setting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
         }
 
         return back()->with('success', 'Settings updated successfully.');

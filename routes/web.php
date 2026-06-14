@@ -62,7 +62,7 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
     \App\Models\Message::create($validated);
 
     return back()->with('success', 'Your message has been sent successfully. We will get back to you soon!');
-})->name('contact.store');
+})->middleware('throttle:5,1')->name('contact.store');
 
 Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $request, \App\Models\Vacancy $vacancy) {
     $request->validate([
@@ -73,7 +73,7 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
         'cv' => 'required|file|mimes:pdf,doc,docx|max:10240',
     ]);
 
-    $cvPath = $request->file('cv')->store('applicants/cvs', 'public');
+    $cvPath = $request->file('cv')->store('applicants/cvs', 'local');
 
     \App\Models\Applicant::create([
         'vacancy_id' => $vacancy->id,
@@ -86,7 +86,7 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
     ]);
 
     return back()->with('success', 'Your application has been submitted successfully.');
-})->name('vacancies.apply');
+})->middleware('throttle:5,1')->name('vacancies.apply');
 
 
 // ======================
