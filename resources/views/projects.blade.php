@@ -3,6 +3,19 @@
 @section('title', 'Our Architectural & Infrastructure Portfolio')
 @section('meta_description', 'Explore Sador General Construction\'s portfolio of completed commercial buildings, residential complexes, and civil infrastructure projects across Ethiopia.')
 
+@push('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ url('/') }}" },
+        { "@type": "ListItem", "position": 2, "name": "Projects", "item": "{{ url()->current() }}" }
+    ]
+}
+</script>
+@endpush
+
 @section('content')
     <!-- Page Header -->
     <div class="bg-slate-950 text-white py-32 relative overflow-hidden">

@@ -2,6 +2,38 @@
 
 @section('title', $project->title)
 @section('meta_description', Str::limit(strip_tags($project->description), 150))
+@section('og_image', $project->cover_url)
+
+@push('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ url('/') }}" },
+        { "@type": "ListItem", "position": 2, "name": "Projects", "item": "{{ url('/projects') }}" },
+        { "@type": "ListItem", "position": 3, "name": {!! json_encode($project->title) !!}, "item": "{{ url()->current() }}" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": {!! json_encode($project->title) !!},
+    "description": {!! json_encode(Str::limit(strip_tags($project->description), 300)) !!},
+    "image": "{{ $project->cover_url }}",
+    @if($project->year)"dateCreated": "{{ $project->year }}",@endif
+    @if($project->location)"locationCreated": { "@type": "Place", "name": {!! json_encode($project->location) !!} },@endif
+    "url": "{{ url()->current() }}",
+    "provider": {
+        "@type": "GeneralContractor",
+        "name": "Sador General Construction",
+        "url": "{{ url('/') }}"
+    }
+}
+</script>
+@endpush
 
 @section('content')
 @php

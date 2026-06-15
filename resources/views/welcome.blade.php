@@ -48,7 +48,7 @@
                 </h1>
                 
                 <p class="text-lg md:text-xl text-slate-300 mb-12 font-light leading-relaxed max-w-3xl">
-                At SADOR General Construction, we believe that every great structure is built on a foundation of reliability and integrity.
+                At Sador General Construction, we believe that every great structure is built on a foundation of reliability and integrity.
                 And, we know that every project begins with a vision. That's why we treat your project like it's our own.
                 <br>
                 <span class="text-sador-orange font-bold">"Your Vision, Our Mission"</span>
@@ -231,25 +231,25 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
                 <div data-aos="zoom-in" data-aos-delay="100" class="pt-8 lg:pt-0 lg:px-4">
                     <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        15<span class="text-sador-orange font-bold">+</span>
+                        {{ $settings['years_experience'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
                     <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Years Industry Dominance</div>
                 </div>
                 <div data-aos="zoom-in" data-aos-delay="200" class="pt-8 lg:pt-0 lg:px-4">
                     <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        15<span class="text-sador-orange font-bold">+</span>
+                        {{ $settings['projects_completed'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
                     <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Major Handed-Over Projects</div>
                 </div>
                 <div data-aos="zoom-in" data-aos-delay="300" class="pt-8 lg:pt-0 lg:px-4">
                     <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        85<span class="text-sador-orange font-bold">+</span>
+                        {{ $settings['happy_clients'] ?? '85' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
                     <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Prestigious Happy Corporate Clients</div>
                 </div>
                 <div data-aos="zoom-in" data-aos-delay="400" class="pt-8 lg:pt-0 lg:px-4">
                     <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        300<span class="text-sador-orange font-bold">+</span>
+                        {{ $settings['professional_staff'] ?? '300' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
                     <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">In-house Professional Staff</div>
                 </div>
@@ -479,9 +479,9 @@
                     <a href="/contact" class="bg-gradient-to-r from-sador-orange to-amber-500 text-white px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest hover:opacity-95 shadow-xl shadow-sador-orange/20 transition-all">
                         Contact Us
                     </a>
-                    <a href="tel:+251911708175" class="bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                    <a href="tel:{{ preg_replace('/[^+0-9]/', '', $settings['whatsapp_number'] ?? '+251911708175') }}" class="bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 px-10 py-5 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2">
                         <i data-lucide="phone-call" class="w-4 h-4 text-sador-orange"></i>
-                        Direct Call: +251 911 70 81 75
+                        Direct Call: {{ $settings['company_phone'] ?? '+251 911 70 81 75' }}
                     </a>
                 </div>
             </div>

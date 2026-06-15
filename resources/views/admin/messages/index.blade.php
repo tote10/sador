@@ -4,9 +4,28 @@
 
 @section('content')
 <div class="space-y-6">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
-        <h3 class="text-sm font-display font-extrabold text-white uppercase tracking-wider">Inbox</h3>
-        <p class="text-xs text-slate-500 font-light mt-1">Review contact form inquiries sent by public users.</p>
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h3 class="text-sm font-display font-extrabold text-white uppercase tracking-wider">Inbox</h3>
+            <p class="text-xs text-slate-500 font-light mt-1">Review contact form inquiries sent by public users.</p>
+        </div>
+        @if ($messages->total() > 0)
+            <div class="flex items-center gap-2 shrink-0">
+                <form action="{{ route('admin.messages.readAll') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 bg-sador-blue/10 hover:bg-sador-blue/20 text-sador-blue text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition border border-sador-blue/20">
+                        <i data-lucide="check-check" class="w-3.5 h-3.5"></i> Mark all read
+                    </button>
+                </form>
+                <form action="{{ route('admin.messages.destroyAll') }}" method="POST" onsubmit="return confirm('Delete ALL messages permanently? This cannot be undone.');" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 bg-red-500/10 hover:bg-red-500 hover:text-white text-red-400 text-[10px] font-extrabold uppercase tracking-wider rounded-xl transition border border-red-500/20">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete all
+                    </button>
+                </form>
+            </div>
+        @endif
     </div>
 
     <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">

@@ -3,6 +3,36 @@
 @section('title', 'Engineering & Construction Services')
 @section('meta_description', 'Commercial, residential and heavy civil construction services — turnkey project management, aluminium cladding, finishing and infrastructure works delivered with engineering precision.')
 
+@push('schema')
+@php
+    $serviceItems = $services->map(function ($s, $idx) {
+        return [
+            '@type' => 'ListItem',
+            'position' => $idx + 1,
+            'item' => array_filter([
+                '@type' => 'Service',
+                'name' => $s->title,
+                'description' => $s->full_description ? Str::limit(strip_tags($s->full_description), 200) : null,
+                'provider' => [
+                    '@type' => 'GeneralContractor',
+                    'name' => 'Sador General Construction',
+                    'url' => url('/'),
+                ],
+            ]),
+        ];
+    })->values();
+    $serviceSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'ItemList',
+        'name' => 'Engineering & Construction Services',
+        'itemListElement' => $serviceItems,
+    ];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($serviceSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
+
 @section('content')
     <!-- Page Header -->
     <div class="bg-slate-950 text-white py-32 relative overflow-hidden">

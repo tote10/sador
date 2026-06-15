@@ -70,22 +70,21 @@
                 <ul class="space-y-4 text-sm text-slate-400 font-medium">
                     <li class="flex items-start gap-3">
                         <i data-lucide="map-pin" class="w-5 h-5 text-sador-orange shrink-0 mt-0.5"></i>
-                        <span>ADDISABABA, ALEMNESH plaza building 13TH floor, Room No.1303</span>
+                        <span>{{ $settings['company_address'] ?? 'ADDISABABA, ALEMNESH plaza building 13TH floor, Room No.1303' }}</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <i data-lucide="phone" class="w-5 h-5 text-sador-orange shrink-0 mt-0.5"></i>
                         <div>
-                            <a href="tel:+251911708175" class="hover:text-sador-orange transition-colors block">+2519 11 70 81 75</a>
-                            <a href="tel:+251976808076" class="hover:text-sador-orange transition-colors block">+2519 76 80 80 76</a>
+                            <a href="tel:{{ preg_replace('/[^+0-9]/', '', $settings['whatsapp_number'] ?? '+251911708175') }}" class="hover:text-sador-orange transition-colors block">{{ $settings['company_phone'] ?? '+2519 11 70 81 75 / +2519 76 80 80 76' }}</a>
                         </div>
                     </li>
                     <li class="flex items-center gap-3">
                         <i data-lucide="mail" class="w-5 h-5 text-sador-orange shrink-0"></i>
-                        <a href="mailto:Sadorgcsador@gmail.com" class="hover:text-sador-orange transition-colors">Sadorgcsador@gmail.com</a>
+                        <a href="mailto:{{ $settings['company_email'] ?? 'Sadorgcsador@gmail.com' }}" class="hover:text-sador-orange transition-colors">{{ $settings['company_email'] ?? 'Sadorgcsador@gmail.com' }}</a>
                     </li>
                     <li class="flex items-center gap-3">
                         <i data-lucide="clock" class="w-5 h-5 text-sador-orange shrink-0"></i>
-                        <span>Mon - Sat: 8:00 AM - 5:30 PM</span>
+                        <span>{{ $settings['working_hours'] ?? 'Mon - Sat: 8:00 AM - 5:30 PM' }}</span>
                     </li>
                 </ul>
             </div>

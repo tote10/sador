@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Mail\ApplicationReceived;
+use App\Mail\ContactReceived;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -62,7 +66,14 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
         'message' => 'required|string',
     ]);
 
-    \App\Models\Message::create($validated);
+    $message = \App\Models\Message::create($validated);
+
+    // Auto-acknowledgement to the sender. A mail failure must never break the submission.
+    try {
+        Mail::to($message->email)->send(new ContactReceived($message));
+    } catch (\Throwable $e) {
+        Log::error('Failed to send contact acknowledgement email: ' . $e->getMessage());
+    }
 
     return back()->with('success', 'Your message has been sent successfully. We will get back to you soon!');
 })->middleware('throttle:5,1')->name('contact.store');
@@ -82,7 +93,7 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
 
     $cvPath = $request->file('cv')->store('applicants/cvs', 'local');
 
-    \App\Models\Applicant::create([
+    $applicant = \App\Models\Applicant::create([
         'vacancy_id' => $vacancy->id,
         'full_name' => $request->full_name,
         'phone' => $request->phone,
@@ -91,6 +102,13 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
         'cv_path' => $cvPath,
         'status' => 'new',
     ]);
+
+    // Auto-acknowledgement to the applicant. A mail failure must never break the submission.
+    try {
+        Mail::to($applicant->email)->send(new ApplicationReceived($applicant->load('vacancy')));
+    } catch (\Throwable $e) {
+        Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
+    }
 
     return back()->with('success', 'Your application has been submitted successfully.');
 })->middleware('throttle:5,1')->name('vacancies.apply');
@@ -107,7 +125,7 @@ Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
 
     $cvPath = $request->file('cv')->store('applicants/cvs', 'local');
 
-    \App\Models\Applicant::create([
+    $applicant = \App\Models\Applicant::create([
         'vacancy_id' => null,
         'full_name' => $request->full_name,
         'phone' => $request->phone,
@@ -117,6 +135,13 @@ Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
         'status' => 'new',
     ]);
 
+    // Auto-acknowledgement to the applicant. A mail failure must never break the submission.
+    try {
+        Mail::to($applicant->email)->send(new ApplicationReceived($applicant));
+    } catch (\Throwable $e) {
+        Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
+    }
+
     return back()->with('success', 'Your application has been submitted successfully.');
 })->middleware('throttle:5,1')->name('careers.apply');
 
@@ -124,23 +149,36 @@ Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
 // SEO: sitemap & robots
 // ======================
 Route::get('/sitemap.xml', function () {
+    // Build date for static pages — they change with deploys, not on a fixed schedule.
+    $buildDate = now()->toAtomString();
+
     $urls = [
-        ['loc' => url('/'),         'priority' => '1.0'],
-        ['loc' => url('/about'),    'priority' => '0.8'],
-        ['loc' => url('/services'), 'priority' => '0.8'],
-        ['loc' => url('/projects'), 'priority' => '0.8'],
-        ['loc' => url('/vacancies'),'priority' => '0.7'],
-        ['loc' => url('/contact'),  'priority' => '0.7'],
+        ['loc' => url('/'),         'priority' => '1.0', 'changefreq' => 'weekly',  'lastmod' => $buildDate],
+        ['loc' => url('/about'),    'priority' => '0.8', 'changefreq' => 'monthly', 'lastmod' => $buildDate],
+        ['loc' => url('/services'), 'priority' => '0.8', 'changefreq' => 'weekly',  'lastmod' => $buildDate],
+        ['loc' => url('/projects'), 'priority' => '0.8', 'changefreq' => 'weekly',  'lastmod' => $buildDate],
+        ['loc' => url('/vacancies'),'priority' => '0.7', 'changefreq' => 'weekly',  'lastmod' => $buildDate],
+        ['loc' => url('/contact'),  'priority' => '0.7', 'changefreq' => 'monthly', 'lastmod' => $buildDate],
     ];
 
     foreach (\App\Models\Project::published()->get() as $project) {
-        $urls[] = ['loc' => url('/projects/' . $project->slug), 'priority' => '0.6'];
+        $urls[] = [
+            'loc' => url('/projects/' . $project->slug),
+            'priority' => '0.6',
+            'changefreq' => 'monthly',
+            'lastmod' => optional($project->updated_at)->toAtomString(),
+        ];
     }
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
     foreach ($urls as $u) {
-        $xml .= '  <url><loc>' . htmlspecialchars($u['loc'], ENT_XML1) . '</loc><priority>' . $u['priority'] . '</priority></url>' . "\n";
+        $xml .= '  <url><loc>' . htmlspecialchars($u['loc'], ENT_XML1) . '</loc>';
+        if (!empty($u['lastmod'])) {
+            $xml .= '<lastmod>' . $u['lastmod'] . '</lastmod>';
+        }
+        $xml .= '<changefreq>' . $u['changefreq'] . '</changefreq>';
+        $xml .= '<priority>' . $u['priority'] . '</priority></url>' . "\n";
     }
     $xml .= '</urlset>';
 
@@ -217,13 +255,19 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     // Messages Inbox
     Route::get('messages', [MessageController::class, 'index'])->name('admin.messages.index');
+    Route::post('messages/read-all', [MessageController::class, 'markAllRead'])->name('admin.messages.readAll');
+    Route::delete('messages/delete-all', [MessageController::class, 'destroyAll'])->name('admin.messages.destroyAll');
     Route::get('messages/{message}', [MessageController::class, 'show'])->name('admin.messages.show');
     Route::post('messages/{message}/read', [MessageController::class, 'markAsRead'])->name('admin.messages.read');
+    Route::post('messages/{message}/reply', [MessageController::class, 'reply'])->name('admin.messages.reply');
     Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
 
     // Applicants Tracker
     Route::get('applicants', [ApplicantController::class, 'index'])->name('admin.applicants.index');
+    Route::post('applicants/review-all', [ApplicantController::class, 'markAllReviewed'])->name('admin.applicants.reviewAll');
+    Route::delete('applicants/delete-all', [ApplicantController::class, 'destroyAll'])->name('admin.applicants.destroyAll');
     Route::post('applicants/{applicant}/status', [ApplicantController::class, 'updateStatus'])->name('admin.applicants.status');
+    Route::post('applicants/{applicant}/reply', [ApplicantController::class, 'reply'])->name('admin.applicants.reply');
     Route::get('applicants/{applicant}/download', [ApplicantController::class, 'downloadCv'])->name('admin.applicants.download');
     Route::delete('applicants/{applicant}', [ApplicantController::class, 'destroy'])->name('admin.applicants.destroy');
 

@@ -24,6 +24,11 @@ class SettingController extends Controller
             'whatsapp_number' => 'required|string|max:255',
             'working_hours' => 'required|string|max:255',
             'company_address' => 'required|string|max:255',
+            // Homepage statistic counters
+            'years_experience' => 'required|integer|min:0',
+            'projects_completed' => 'required|integer|min:0',
+            'happy_clients' => 'required|integer|min:0',
+            'professional_staff' => 'required|integer|min:0',
         ]);
 
         foreach ($validated as $key => $value) {

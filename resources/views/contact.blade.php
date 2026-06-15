@@ -50,7 +50,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-200">Office Location</h4>
-                                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">ADDISABABA, ALEMNESH plaza building 13TH floor,<br>Room No.1303</p>
+                                    <p class="text-slate-400 text-sm mt-1 leading-relaxed">{{ $settings['company_address'] ?? 'ADDISABABA, ALEMNESH plaza building 13TH floor, Room No.1303' }}</p>
                                 </div>
                             </div>
 
@@ -61,8 +61,7 @@
                                 <div>
                                     <h4 class="font-bold text-slate-200">Phone Connection</h4>
                                     <p class="text-slate-400 text-sm mt-1">
-                                        <a href="tel:+251911708175" class="hover:text-sador-orange transition-colors font-semibold">+2519 11 70 81 75</a><br>
-                                        <a href="tel:+251976808076" class="hover:text-sador-orange transition-colors font-semibold">+2519 76 80 80 76</a>
+                                        <a href="tel:{{ preg_replace('/[^+0-9]/', '', $settings['whatsapp_number'] ?? '+251911708175') }}" class="hover:text-sador-orange transition-colors font-semibold">{{ $settings['company_phone'] ?? '+2519 11 70 81 75 / +2519 76 80 80 76' }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -74,7 +73,7 @@
                                 <div>
                                     <h4 class="font-bold text-slate-200">Email Dispatch</h4>
                                     <p class="text-slate-400 text-sm mt-1">
-                                        <a href="mailto:Sadorgcsador@gmail.com" class="hover:text-sador-orange transition-colors font-semibold">Sadorgcsador@gmail.com</a>
+                                        <a href="mailto:{{ $settings['company_email'] ?? 'Sadorgcsador@gmail.com' }}" class="hover:text-sador-orange transition-colors font-semibold">{{ $settings['company_email'] ?? 'Sadorgcsador@gmail.com' }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -83,7 +82,7 @@
 
                     <!-- Bottom accreditation footer in block -->
                     <div class="relative z-10 pt-12 border-t border-slate-900 flex items-center gap-3 text-slate-500 text-xs font-semibold">
-                        <span>Estimators Online: 8:00 AM - 5:30 PM</span>
+                        <span>{{ $settings['working_hours'] ?? 'Mon - Sat: 8:00 AM - 5:30 PM' }}</span>
                     </div>
                 </div>
 
@@ -165,7 +164,7 @@
     <section class="mb-0 bg-slate-50 pb-20">
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="w-full h-[450px] rounded-[32px] overflow-hidden border border-slate-200 shadow-2xl relative bg-slate-200" data-aos="fade-up">
-                <iframe src="https://maps.google.com/maps?q=Alemnesh%20Plaza,%20Bole,%20Addis%20Ababa,%20Ethiopia&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="{{ $settings['google_maps_embed'] ?? 'https://maps.google.com/maps?q=Alemnesh%20Plaza,%20Bole,%20Addis%20Ababa,%20Ethiopia&t=&z=16&ie=UTF8&iwloc=&output=embed' }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>

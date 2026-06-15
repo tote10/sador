@@ -55,6 +55,30 @@
             </div>
         </div>
 
+        <!-- Homepage statistics section -->
+        <div class="space-y-6">
+            <h4 class="text-xs font-bold text-sador-blue uppercase tracking-widest border-b border-slate-800 pb-3">Homepage Statistics</h4>
+            <p class="text-[11px] text-slate-500 font-light -mt-2">These numbers appear in the stats band on your homepage (the "15+ Years" section). Enter whole numbers only — the "+" is added automatically.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label for="years_experience" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Years of Experience</label>
+                    <input type="number" min="0" name="years_experience" id="years_experience" value="{{ old('years_experience', $settings['years_experience'] ?? '15') }}" required class="block w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-sador-orange/50 focus:border-sador-orange text-xs transition duration-200">
+                </div>
+                <div>
+                    <label for="projects_completed" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Projects Completed</label>
+                    <input type="number" min="0" name="projects_completed" id="projects_completed" value="{{ old('projects_completed', $settings['projects_completed'] ?? '15') }}" required class="block w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-sador-orange/50 focus:border-sador-orange text-xs transition duration-200">
+                </div>
+                <div>
+                    <label for="happy_clients" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Happy Clients</label>
+                    <input type="number" min="0" name="happy_clients" id="happy_clients" value="{{ old('happy_clients', $settings['happy_clients'] ?? '85') }}" required class="block w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-sador-orange/50 focus:border-sador-orange text-xs transition duration-200">
+                </div>
+                <div>
+                    <label for="professional_staff" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Professional Staff</label>
+                    <input type="number" min="0" name="professional_staff" id="professional_staff" value="{{ old('professional_staff', $settings['professional_staff'] ?? '300') }}" required class="block w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-sador-orange/50 focus:border-sador-orange text-xs transition duration-200">
+                </div>
+            </div>
+        </div>
+
         <div class="border-t border-slate-800 pt-6 flex justify-end gap-3">
             <button type="submit" class="px-6 py-3 bg-gradient-to-r from-sador-orange to-amber-500 hover:opacity-95 text-xs font-display font-extrabold uppercase tracking-widest text-white rounded-xl shadow-lg shadow-sador-orange/20 transition transform hover:-translate-y-0.5">
                 Save Settings

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google' => [
+        // SEO/measurement — both inert until real values are set in the environment.
+        'analytics_id' => env('GOOGLE_ANALYTICS_ID'),
+        'site_verification' => env('GOOGLE_SITE_VERIFICATION'),
+    ],
+
 ];
