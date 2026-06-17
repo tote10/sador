@@ -20,15 +20,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Admin user
-        User::updateOrCreate(
-            ['email' => 'admin@sador.com'],
-            [
-                'name' => 'Sador Admin',
-                'password' => bcrypt('password'),
-                'is_admin' => true,
-            ]
-        );
+        // 1. Admin user — credentials come from .env so no weak default ships to production.
+        $adminEmail = env('ADMIN_EMAIL');
+        $adminPassword = env('ADMIN_PASSWORD');
+
+        if (blank($adminEmail) || blank($adminPassword)) {
+            $this->command?->warn('Skipping admin user: set ADMIN_EMAIL and ADMIN_PASSWORD in .env first.');
+        } else {
+            User::updateOrCreate(
+                ['email' => $adminEmail],
+                [
+                    'name' => env('ADMIN_NAME', 'Sador Admin'),
+                    'password' => bcrypt($adminPassword),
+                    'is_admin' => true,
+                ]
+            );
+        }
 
         $user = User::where('email', 'motialemu9@gmail.com')->first();
         if ($user) {

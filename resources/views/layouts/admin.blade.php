@@ -132,6 +132,9 @@
                                 <h4 class="text-xs font-bold text-white">{{ auth()->user()->name ?? 'Admin' }}</h4>
                                 <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Administrator</span>
                             </div>
+                            <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                                <i data-lucide="user" class="w-4 h-4 opacity-60"></i> My Account
+                            </a>
                             <a href="{{ route('admin.settings.edit') }}" class="flex items-center gap-2 px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition">
                                 <i data-lucide="settings" class="w-4 h-4 opacity-60"></i> Settings
                             </a>
