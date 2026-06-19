@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\VacancyController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\AwardController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ApplicantController;
 use App\Http\Controllers\Admin\SettingController;
@@ -251,6 +252,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'edit' => 'admin.awards.edit',
         'update' => 'admin.awards.update',
         'destroy' => 'admin.awards.destroy',
+    ]);
+
+    // Partners CRUD
+    Route::resource('partners', PartnerController::class)->names([
+        'index' => 'admin.partners.index',
+        'create' => 'admin.partners.create',
+        'store' => 'admin.partners.store',
+        'edit' => 'admin.partners.edit',
+        'update' => 'admin.partners.update',
+        'destroy' => 'admin.partners.destroy',
     ]);
 
     // Messages Inbox

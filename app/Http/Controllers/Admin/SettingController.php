@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 class SettingController extends Controller
 {
     
@@ -37,6 +39,9 @@ class SettingController extends Controller
                 ['value' => $value]
             );
         }
+
+        // Bust the cached settings shared with every view (see AppServiceProvider).
+        Cache::forget('site_settings');
 
         return back()->with('success', 'Settings updated successfully.');
     }

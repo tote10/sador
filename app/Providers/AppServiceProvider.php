@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -29,13 +30,23 @@ class AppServiceProvider extends ServiceProvider
 
         // Expose site settings to every Blade view as $settings (key => value),
         // so editing them in the admin panel actually changes the public site.
-        // Guarded so artisan commands still work before the settings table exists.
+        // Cached forever (flushed in SettingController@update) so the public site
+        // doesn't hit the DB for settings on every request. The schema check only
+        // runs on a cache miss, and we never cache the "table missing" state so the
+        // value self-heals once migrations have run.
         try {
-            if (Schema::hasTable('settings')) {
-                View::share('settings', Setting::pluck('value', 'key'));
-            } else {
-                View::share('settings', collect());
+            $settings = Cache::rememberForever('site_settings', function () {
+                return Schema::hasTable('settings')
+                    ? Setting::pluck('value', 'key')
+                    : null;
+            });
+
+            if ($settings === null) {
+                Cache::forget('site_settings');
+                $settings = collect();
             }
+
+            View::share('settings', $settings);
         } catch (\Throwable $e) {
             View::share('settings', collect());
         }

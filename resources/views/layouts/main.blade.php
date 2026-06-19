@@ -92,13 +92,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+    {{-- Per-page resource hints (e.g. preloading the LCP image). Placed early so the preload scanner sees them. --}}
+    @stack('head')
     
-    <!-- AOS Library (non-render-blocking) -->
-    <link rel="preload" as="style" href="https://unpkg.com/aos@next/dist/aos.css" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /></noscript>
+    <!-- AOS Library (non-render-blocking; version-pinned for long-lived browser caching) -->
+    <link rel="preload" as="style" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.css" /></noscript>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <!-- Lucide Icons (version-pinned: @latest is only cached 60s by unpkg; a pinned URL is cached immutably for a year) -->
+    <script src="https://unpkg.com/lucide@1.21.0/dist/umd/lucide.min.js" defer></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -124,7 +127,7 @@
     @include('components.floating-buttons')
     
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+    <script src="https://unpkg.com/aos@3.0.0-beta.6/dist/aos.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Lucide Icons

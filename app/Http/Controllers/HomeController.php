@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\Award;
+use App\Models\Partner;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
 
         $testimonials = Testimonial::published()->take(12)->get();
         $awards = Award::published()->take(12)->get();
+        $partners = Partner::published()->orderBy('sort_order')->latest()->take(24)->get();
 
-        return view('welcome', compact('featuredProjects', 'services', 'testimonials', 'awards'));
+        return view('welcome', compact('featuredProjects', 'services', 'testimonials', 'awards', 'partners'));
     }
 }

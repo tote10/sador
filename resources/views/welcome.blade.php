@@ -3,6 +3,12 @@
 @section('title', 'Leading Construction & Infrastructure in Ethiopia')
 @section('meta_description', 'Sador General Construction builds commercial towers, residential complexes and civil infrastructure across Ethiopia — delivered on time, on budget, and to the highest safety standards.')
 
+{{-- Preload the first hero slide: it's the LCP image, but its src is Alpine-bound (:src) so the
+     browser can't discover it on its own. This hint fetches it immediately, in parallel. --}}
+@push('head')
+    <link rel="preload" as="image" href="{{ asset('images/hero-building1.jpg') }}" fetchpriority="high">
+@endpush
+
 @section('content')
     <!-- Hero Section -->
     <section class="relative bg-slate-950 text-white min-h-screen flex items-center pt-24 overflow-hidden"
@@ -220,42 +226,6 @@
             </div>
         </div>
     </section>
-    
-    <!-- Experience Stats -->
-    <section class="py-24 bg-slate-950 relative overflow-hidden text-white">
-        <!-- Abstract gradient mesh -->
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#003087_0%,transparent_50%)] opacity-30"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#FF6600_0%,transparent_50%)] opacity-20"></div>
-        
-        <div class="container mx-auto px-4 max-w-7xl relative z-10">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
-                <div data-aos="zoom-in" data-aos-delay="100" class="pt-8 lg:pt-0 lg:px-4">
-                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        {{ $settings['years_experience'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
-                    </div>
-                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Years Industry Dominance</div>
-                </div>
-                <div data-aos="zoom-in" data-aos-delay="200" class="pt-8 lg:pt-0 lg:px-4">
-                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        {{ $settings['projects_completed'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
-                    </div>
-                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Major Handed-Over Projects</div>
-                </div>
-                <div data-aos="zoom-in" data-aos-delay="300" class="pt-8 lg:pt-0 lg:px-4">
-                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        {{ $settings['happy_clients'] ?? '85' }}<span class="text-sador-orange font-bold">+</span>
-                    </div>
-                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Prestigious Happy Corporate Clients</div>
-                </div>
-                <div data-aos="zoom-in" data-aos-delay="400" class="pt-8 lg:pt-0 lg:px-4">
-                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
-                        {{ $settings['professional_staff'] ?? '300' }}<span class="text-sador-orange font-bold">+</span>
-                    </div>
-                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">In-house Professional Staff</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     @if($awards->count())
     <!-- Awards & Recognitions -->
@@ -267,21 +237,24 @@
                 <div class="w-24 h-1 bg-gradient-to-r from-sador-orange to-amber-500 mx-auto rounded-full"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                @foreach ($awards as $awd)
-                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                    <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                        @if ($awd->logo_url)
-                            <img src="{{ $awd->logo_url }}" class="w-8 h-8 object-contain" alt="{{ $awd->title }}">
-                        @else
-                            <i data-lucide="award" class="w-7 h-7"></i>
-                        @endif
+            <!-- Awards — continuous marquee -->
+            <div class="marquee" style="--marquee-duration: {{ max(24, $awards->count() * 7) }}s;">
+                <div class="marquee__track py-2">
+                    @foreach ($awards->concat($awards) as $awd)
+                    <div class="shrink-0 w-80 mr-8 bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:border-sador-orange/20 transition-all duration-300 text-center group">
+                        <div class="w-32 h-32 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden p-2 group-hover:scale-110 transition-transform">
+                            @if ($awd->logo_url)
+                                <img src="{{ $awd->logo_url }}" class="w-full h-full object-contain" alt="{{ $awd->title }}" loading="lazy">
+                            @else
+                                <i data-lucide="award" class="w-14 h-14"></i>
+                            @endif
+                        </div>
+                        <span class="text-slate-400 text-xs font-bold block mb-2">{{ $awd->year }}</span>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">{{ $awd->title }}</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed line-clamp-3">{{ $awd->description }}</p>
                     </div>
-                    <span class="text-slate-400 text-xs font-bold block mb-2">{{ $awd->year }}</span>
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 group-hover:text-sador-blue transition-colors">{{ $awd->title }}</h3>
-                    <p class="text-slate-500 text-xs leading-relaxed">{{ $awd->description }}</p>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </section>
@@ -393,67 +366,65 @@
                 <div class="w-24 h-1 bg-gradient-to-r from-sador-orange to-amber-500 mx-auto rounded-full mt-6"></div>
             </div>
 
-            <!-- Partners Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 text-center">
-                <!-- Partner Card -->
-                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl flex flex-col items-center justify-center shadow-lg shadow-slate-200/40 group hover:border-sador-orange/30 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                    <i data-lucide="building-2" class="w-8 h-8 text-sador-blue mb-3 group-hover:text-sador-orange group-hover:scale-110 transition-all duration-300"></i>
-                    <h4 class="font-extrabold tracking-wider text-sm text-slate-900">NOAH DEVELOPERS</h4>
-                    <span class="text-slate-400 text-[10px] uppercase font-bold mt-1">Real Estate Partner</span>
-                </div>
-                <!-- Partner Card -->
-                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl flex flex-col items-center justify-center shadow-lg shadow-slate-200/40 group hover:border-sador-orange/30 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-                    <i data-lucide="home" class="w-8 h-8 text-sador-blue mb-3 group-hover:text-sador-orange group-hover:scale-110 transition-all duration-300"></i>
-                    <h4 class="font-extrabold tracking-wider text-sm text-slate-900">GIFT REAL ESTATE</h4>
-                    <span class="text-slate-400 text-[10px] uppercase font-bold mt-1">Luxury Contractor Partner</span>
-                </div>
-                <!-- Partner Card -->
-                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl flex flex-col items-center justify-center shadow-lg shadow-slate-200/40 group hover:border-sador-orange/30 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-                    <i data-lucide="route" class="w-8 h-8 text-sador-blue mb-3 group-hover:text-sador-orange group-hover:scale-110 transition-all duration-300"></i>
-                    <h4 class="font-extrabold tracking-wider text-sm text-slate-900">FEDERAL ROAD AUTHORITY</h4>
-                    <span class="text-slate-400 text-[10px] uppercase font-bold mt-1">Civil Infrastructure Client</span>
-                </div>
-                <!-- Partner Card -->
-                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl flex flex-col items-center justify-center shadow-lg shadow-slate-200/40 group hover:border-sador-orange/30 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
-                    <i data-lucide="scroll" class="w-8 h-8 text-sador-blue mb-3 group-hover:text-sador-orange group-hover:scale-110 transition-all duration-300"></i>
-                    <h4 class="font-extrabold tracking-wider text-sm text-slate-900">MINISTRY OF URBAN DEV</h4>
-                    <span class="text-slate-400 text-[10px] uppercase font-bold mt-1">Government Contracting</span>
+            <!-- Partners — continuous marquee (admin-managed) -->
+            @if ($partners->count())
+            <div class="marquee mb-16" style="--marquee-duration: {{ max(20, $partners->count() * 6) }}s;">
+                <div class="marquee__track py-2">
+                    @foreach ($partners->concat($partners) as $partner)
+                        <div class="shrink-0 w-72 mr-8 bg-white border border-slate-200/80 p-8 rounded-3xl flex flex-col items-center justify-center text-center shadow-lg shadow-slate-200/40 group hover:border-sador-orange/30 hover:shadow-xl transition-all duration-300">
+                            @if ($partner->logo_url)
+                                <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" loading="lazy" class="h-20 w-auto max-w-[200px] object-contain mb-4 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+                            @else
+                                <i data-lucide="building-2" class="w-12 h-12 text-sador-blue mb-4 group-hover:text-sador-orange group-hover:scale-110 transition-all duration-300"></i>
+                            @endif
+                            <h4 class="font-extrabold tracking-wider text-sm text-slate-900">{{ $partner->name }}</h4>
+                            @if ($partner->role_label)
+                                <span class="text-slate-400 text-[10px] uppercase font-bold mt-1">{{ $partner->role_label }}</span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
+            @endif
+        </div>
+    </section>
 
-            <!-- Trust / Certification Badges -->
-            <div class="border-t border-slate-200 pt-16 grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
-                <div class="flex items-center gap-4 justify-center md:justify-start">
-                    <div class="w-12 h-12 bg-sador-blue/5 rounded-2xl flex items-center justify-center shrink-0 text-sador-orange">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+    <!-- Experience Stats -->
+    <section class="py-24 bg-slate-950 relative overflow-hidden text-white">
+        <!-- Abstract gradient mesh -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#003087_0%,transparent_50%)] opacity-30"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#FF6600_0%,transparent_50%)] opacity-20"></div>
+
+        <div class="container mx-auto px-4 max-w-7xl relative z-10">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+                <div data-aos="zoom-in" data-aos-delay="100" class="pt-8 lg:pt-0 lg:px-4">
+                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
+                        {{ $settings['years_experience'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900">100% Insured Operations</h4>
-                        <p class="text-slate-500 text-xs mt-0.5 font-light">Comprehensive liability coverage for all civil projects.</p>
-                    </div>
+                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Years Industry Dominance</div>
                 </div>
-                <div class="flex items-center gap-4 justify-center md:justify-start">
-                    <div class="w-12 h-12 bg-sador-blue/5 rounded-2xl flex items-center justify-center shrink-0 text-sador-orange">
-                        <i data-lucide="award" class="w-6 h-6"></i>
+                <div data-aos="zoom-in" data-aos-delay="200" class="pt-8 lg:pt-0 lg:px-4">
+                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
+                        {{ $settings['projects_completed'] ?? '15' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900">ISO Certified Quality</h4>
-                        <p class="text-slate-500 text-xs mt-0.5 font-light">Adhering strictly to international ISO 9001 blueprints.</p>
-                    </div>
+                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Major Handed-Over Projects</div>
                 </div>
-                <div class="flex items-center gap-4 justify-center md:justify-start">
-                    <div class="w-12 h-12 bg-sador-blue/5 rounded-2xl flex items-center justify-center shrink-0 text-sador-orange">
-                        <i data-lucide="hard-hat" class="w-6 h-6"></i>
+                <div data-aos="zoom-in" data-aos-delay="300" class="pt-8 lg:pt-0 lg:px-4">
+                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
+                        {{ $settings['happy_clients'] ?? '85' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900">Zero Site Incidents Rating</h4>
-                        <p class="text-slate-500 text-xs mt-0.5 font-light">Voted top HSE safety metrics contractor multiple times.</p>
+                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">Prestigious Happy Corporate Clients</div>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="400" class="pt-8 lg:pt-0 lg:px-4">
+                    <div class="text-5xl md:text-7xl font-display font-extrabold text-white mb-3 tracking-tight">
+                        {{ $settings['professional_staff'] ?? '300' }}<span class="text-sador-orange font-bold">+</span>
                     </div>
+                    <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">In-house Professional Staff</div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Dynamic Call To Action -->
     <section class="relative py-32 bg-slate-950 overflow-hidden text-white border-t border-slate-900">
         <!-- Background Asset with dark glowing orange overlay -->

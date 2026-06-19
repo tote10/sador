@@ -37,6 +37,12 @@
             'active' => request()->routeIs('admin.awards.*')
         ],
         [
+            'route' => 'admin.partners.index',
+            'label' => 'Partners',
+            'icon' => 'handshake',
+            'active' => request()->routeIs('admin.partners.*')
+        ],
+        [
             'route' => 'admin.messages.index',
             'label' => 'Inbox Messages',
             'icon' => 'inbox',
