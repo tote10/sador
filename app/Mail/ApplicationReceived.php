@@ -17,6 +17,7 @@ class ApplicationReceived extends Mailable
     {
     }
 
+
     public function envelope(): Envelope
     {
         return new Envelope(
