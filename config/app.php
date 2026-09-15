@@ -1,6 +1,7 @@
 <?php
 
 $appKey = env('APP_KEY');
+$appUrl = env('RENDER_EXTERNAL_URL', env('APP_URL', 'http://localhost'));
 
 if ($appKey && ! str_starts_with($appKey, 'base64:')) {
     $appKey = 'base64:'.base64_encode(hash('sha256', $appKey, true));
@@ -58,7 +59,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', env('RENDER_EXTERNAL_URL', 'http://localhost')),
+    'url' => $appUrl,
 
     /*
     |--------------------------------------------------------------------------
