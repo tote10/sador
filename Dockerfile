@@ -28,10 +28,9 @@ COPY --from=vendor /app/vendor ./vendor
 COPY . .
 COPY --from=assets /app/public/build ./public/build
 
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
-    && sed -ri -e 's!<Directory /var/www/html>!<Directory /var/www/html/public>!' /etc/apache2/apache2.conf \
-    && printf '%s\n' '<Directory /var/www/html/public>' '    AllowOverride All' '    Require all granted' '</Directory>' >> /etc/apache2/apache2.conf \
-    && chown -R www-data:www-data storage bootstrap/cache
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN chown -R www-data:www-data storage bootstrap/cache
 
 COPY docker/start.sh /usr/local/bin/start-sador
 RUN chmod +x /usr/local/bin/start-sador
