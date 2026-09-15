@@ -74,6 +74,7 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
     // Auto-acknowledgement to the sender. A mail failure must never break the submission.
     try {
         Mail::to($message->email)->send(new ContactReceived($message));
+        Mail::to(config('mail.from.address'))->send(new ContactReceived($message));
     } catch (\Throwable $e) {
         Log::error('Failed to send contact acknowledgement email: ' . $e->getMessage());
         return back()->with('error', 'Your message was saved, but the confirmation email could not be sent. Please contact us directly.');
@@ -110,6 +111,7 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
     // Auto-acknowledgement to the applicant. A mail failure must never break the submission.
     try {
         Mail::to($applicant->email)->send(new ApplicationReceived($applicant->load('vacancy')));
+        Mail::to(config('mail.from.address'))->send(new ApplicationReceived($applicant->load('vacancy')));
     } catch (\Throwable $e) {
         Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
         return back()->with('error', 'Your application was saved, but the confirmation email could not be sent. Please contact us directly.');
@@ -143,6 +145,7 @@ Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
     // Auto-acknowledgement to the applicant. A mail failure must never break the submission.
     try {
         Mail::to($applicant->email)->send(new ApplicationReceived($applicant));
+        Mail::to(config('mail.from.address'))->send(new ApplicationReceived($applicant));
     } catch (\Throwable $e) {
         Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
         return back()->with('error', 'Your application was saved, but the confirmation email could not be sent. Please contact us directly.');
