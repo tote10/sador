@@ -76,6 +76,7 @@ Route::post('/contact', function (Illuminate\Http\Request $request) {
         Mail::to($message->email)->send(new ContactReceived($message));
     } catch (\Throwable $e) {
         Log::error('Failed to send contact acknowledgement email: ' . $e->getMessage());
+        return back()->with('error', 'Your message was saved, but the confirmation email could not be sent. Please contact us directly.');
     }
 
     return back()->with('success', 'Your message has been sent successfully. We will get back to you soon!');
@@ -111,6 +112,7 @@ Route::post('/vacancies/{vacancy}/apply', function (Illuminate\Http\Request $req
         Mail::to($applicant->email)->send(new ApplicationReceived($applicant->load('vacancy')));
     } catch (\Throwable $e) {
         Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
+        return back()->with('error', 'Your application was saved, but the confirmation email could not be sent. Please contact us directly.');
     }
 
     return back()->with('success', 'Your application has been submitted successfully.');
@@ -143,6 +145,7 @@ Route::post('/careers/apply', function (Illuminate\Http\Request $request) {
         Mail::to($applicant->email)->send(new ApplicationReceived($applicant));
     } catch (\Throwable $e) {
         Log::error('Failed to send application acknowledgement email: ' . $e->getMessage());
+        return back()->with('error', 'Your application was saved, but the confirmation email could not be sent. Please contact us directly.');
     }
 
     return back()->with('success', 'Your application has been submitted successfully.');
