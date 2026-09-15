@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin\SettingController;
 // ======================
 // PUBLIC ROUTES
 // ======================
+Route::get('/up', fn () => response('OK', 200));
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/services', function () {
