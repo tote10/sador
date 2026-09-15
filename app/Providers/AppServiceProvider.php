@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         // Cap "remember me" at 30 days (Laravel's default is ~400 days).
         // Without "remember me", SESSION_EXPIRE_ON_CLOSE logs the user out when the browser closes.
         Auth::guard('web')->setRememberDuration(60 * 24 * 30);
