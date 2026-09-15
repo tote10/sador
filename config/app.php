@@ -1,5 +1,11 @@
 <?php
 
+$appKey = env('APP_KEY');
+
+if ($appKey && ! str_starts_with($appKey, 'base64:')) {
+    $appKey = 'base64:'.base64_encode(hash('sha256', $appKey, true));
+}
+
 return [
 
     /*
@@ -97,7 +103,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'key' => env('APP_KEY'),
+    'key' => $appKey,
 
     'previous_keys' => [
         ...array_filter(
