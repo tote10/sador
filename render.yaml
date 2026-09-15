@@ -32,6 +32,8 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: local
+      - key: LOG_CHANNEL
+        value: stderr
       - key: ADMIN_EMAIL
         sync: false
       - key: ADMIN_PASSWORD
