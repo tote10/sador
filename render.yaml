@@ -48,11 +48,11 @@ services:
       - key: MAIL_TIMEOUT
         value: "10"
       - key: MAIL_USERNAME
-        value: "motialemu9@gmail.com"
+        sync: false
       - key: MAIL_PASSWORD
-        value: "iioyakqhwywxeodk"
+        sync: false
       - key: MAIL_FROM_ADDRESS
-        value: "motialemu9@gmail.com"
+        sync: false
       - key: MAIL_FROM_NAME
         value: Sador General Construction
 
