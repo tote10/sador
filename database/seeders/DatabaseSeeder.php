@@ -293,7 +293,35 @@ class DatabaseSeeder extends Seeder
             Testimonial::updateOrCreate(['client_name' => $test['client_name']], $test);
         }
 
-        // 7. Awards — the company profile lists none, so we keep this empty.
-        Award::query()->delete();
+        $awardsData = [
+            [
+                'title' => 'Best Commercial Contractor',
+                'year' => '2024',
+                'organization' => 'Ethiopian Construction Authority',
+                'description' => 'Awarded for excellence in commercial high-rise development.',
+                'logo_path' => null,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Excellence in Civil Infrastructure',
+                'year' => '2025',
+                'organization' => 'Addis Ababa City Administration',
+                'description' => 'Recognized for outstanding delivery of the Jimma Corridor Development.',
+                'logo_path' => null,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Safety First Award',
+                'year' => '2023',
+                'organization' => 'National Safety Council',
+                'description' => 'For maintaining zero major incidents across all active sites.',
+                'logo_path' => null,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($awardsData as $award) {
+            Award::updateOrCreate(['title' => $award['title']], $award);
+        }
     }
 }
