@@ -23,6 +23,17 @@ use App\Http\Controllers\Admin\SettingController;
 // ======================
 Route::get('/up', fn () => response('OK', 200));
 
+Route::get('/test-email-raw', function () {
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test', function ($msg) {
+            $msg->to(config('mail.from.address', 'motialemu9@gmail.com'))->subject('Test');
+        });
+        return "SUCCESS!";
+    } catch (\Throwable $e) {
+        return "ERROR: " . $e->getMessage() . " | Config Username: " . config('mail.mailers.smtp.username');
+    }
+});
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/services', function () {
